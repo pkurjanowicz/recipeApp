@@ -32,11 +32,12 @@
                   />
                   <v-text-field
                     label="Password"
-                    type="password"
                     v-model="password"
                     autocomplete="new-password"
                     prepend-icon="mdi-lock"
                     :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                    @click:append="showPassword = !showPassword"
+                    :type="showPassword ? 'text' : 'password'"
                   />
                 </v-form>
               </v-card-text>
@@ -72,7 +73,8 @@ export default {
       email: '',
       password: '',
       error: null,
-      success: null
+      success: null,
+      showPassword: false,
     }
   },
   props: {

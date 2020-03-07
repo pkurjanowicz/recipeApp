@@ -8,16 +8,16 @@ vue router will load component(this corresponds with the file names
 const routerOptions = [
   { path: '/', 
     component: 'Home', 
-    props: {
-      title: 'Home Page',
-      },
     },
   { path: '/register', 
     component: 'Register', 
-    props: {
-      title: 'Register' 
-    },
-  }
+  },
+  { path: '/login', 
+    component: 'Login', 
+  },
+  { path: '/profile', 
+    component: 'Profile', 
+  },
 ]
 /* this variable actually maps the 
 route to the component in the views folder*/

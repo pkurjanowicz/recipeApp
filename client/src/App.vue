@@ -3,10 +3,10 @@
     <v-app>
       <main>
         <v-container fluid>
-          <router-link to="/">home</router-link>
-          <v-spacer></v-spacer>
-          <router-link to="/register">register</router-link>
+          <navBar v-if="navBarVisible"/>
           <router-view></router-view>
+
+          {{navBarVisible}}
         </v-container>
       </main>
     </v-app>
@@ -14,10 +14,28 @@
 </template>
 
 <script>
+import navBar from './components/navBar'
 
 export default {
   name: 'app',
-
+  data() {
+    return {
+      navBarVisible: true
+    }
+  },
+  components: {
+    navBar
+  },
+  methods: {
+    navBarCheck() {
+      if (this.$route.path === '/login' || this.$route.path === '/register') {
+        this.navBarVisible = false
+      }
+    }
+  },
+  beforeUpdate() {
+    this.navBarCheck()
+  }
 }
 </script>
 

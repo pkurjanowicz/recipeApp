@@ -1,16 +1,21 @@
 <template>
-  <div class="home">
-    <h1>here is the home page</h1>
-  </div>
+  <v-app>
+    <v-content>
+      <div class="home">
+        <h1>This is the Home Page</h1>
+      </div>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
-// @ is an alias to /src
-
-
 export default {
   name: 'Home',
   components: {
   }
 }
 </script>
+
+<style scoped>
+
+</style>

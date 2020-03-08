@@ -22,13 +22,13 @@
     </template>
     <v-app-bar-nav-icon 
       @click.stop="drawer = !drawer" 
-      text color="black"
+      text color="white"
       x-large 
       dark
     />
       <v-toolbar-title class="text-uppercase bold font-weight-black display-1">
-        <span class="font-weight-light black--text">Recipe</span>
-        <span class='black--text'>Tracker</span>
+        <span class="font-weight-light white--text">Recipe</span>
+        <span class='white--text'>Tracker</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>

@@ -19,7 +19,14 @@
                 color="primary"
                 dark
                 flat
+                src='../assets/med-food-hero.jpg'
               >
+              <template v-slot:img="{ props }">
+                <v-img
+                  v-bind="props"
+                  gradient="to bottom right, rgba(193, 66, 66, 0.9), rgba(25,32,72,0.8)"
+                ></v-img>
+              </template>
                 <v-toolbar-title>Register</v-toolbar-title>
                 <v-spacer />
               </v-toolbar>

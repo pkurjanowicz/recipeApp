@@ -11,4 +11,5 @@ module.exports = (app) => {
   AuthenticationController.login)
   app.get('/auth', auth)
   app.get('/logout', AuthenticationController.logout)
+  app.get('/loginGuest', AuthenticationController.loginGuest)
 }

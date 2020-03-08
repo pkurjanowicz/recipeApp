@@ -42,6 +42,11 @@
                 </v-form>
               </v-card-text>
               <v-card-actions>
+                <v-btn 
+                @click='submitLoginGuest()' 
+                color="secondary">
+                Login as Guest
+                </v-btn>
                 <v-spacer />
                 <v-btn 
                 @click='submitLogin()' 
@@ -103,6 +108,16 @@ export default {
         this.password = ''
         this.email = ''
         this.$router.push('/')
+      } catch (error){
+        this.error = error.response.data.error
+        this.success = null
+      }
+    },
+    async submitLoginGuest() {
+      try {
+          await AuthenicationService.loginGuest()
+          this.error = null
+          this.$router.push('/')
       } catch (error){
         this.error = error.response.data.error
         this.success = null

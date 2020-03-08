@@ -63,6 +63,18 @@ module.exports = {
           response: 'No session to destroy'
         })
       }
+    },
+    async loginGuest (req,res) {
+      try {
+        req.session.user = 'Guest'
+        res.status(200).send({
+          response: 'Success'
+        })
+      } catch (err) {
+        res.status(200).send({
+          response: 'Unable to login'
+        })
+      }
     }
   }
 

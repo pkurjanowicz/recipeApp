@@ -17,7 +17,6 @@ import axios from 'axios'
 
 export default {
   name: 'app',
-  // props:['navBarVisible'],
   data() {
     return {
       navBarVisible: true,

@@ -62,7 +62,6 @@ export default {
       drawerItems: [
         { text: 'Dashboard', icon: 'mdi-view-dashboard', route: '/' },
         { text: 'My Profile', icon: 'mdi-account', route: '/profile' },
-        { text: 'Login', icon: 'mdi-login', route: '/login' },
       ],
       snackbar: false,
     }

@@ -1,11 +1,11 @@
 <template>
   <v-dialog max-width="600px" v-model="dialog">
     <template v-slot:activator="{ on }">
-      <v-btn text v-on="on" class="primary">Add New Project</v-btn>
+      <v-btn text v-on="on" class="primary">Add New Recipe</v-btn>
     </template>
       <v-card>
         <v-card-title >
-          <h2 class="font-weight-light mb-6">Add a New Project</h2>
+          <h2 class="font-weight-light mb-6">Add New Recipe</h2>
         </v-card-title>
         <v-card-text>
           <v-form 

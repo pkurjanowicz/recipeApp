@@ -35,6 +35,13 @@
                     v-model="password"
                     autocomplete="new-password"
                     prepend-icon="mdi-lock"
+                    :type="showPassword ? 'text' : 'password'"
+                  />
+                  <v-text-field
+                    label="Confirm Password"
+                    v-model="confirmPassword"
+                    autocomplete="new-password"
+                    prepend-icon="mdi-lock"
                     :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                     @click:append="showPassword = !showPassword"
                     :type="showPassword ? 'text' : 'password'"
@@ -44,9 +51,21 @@
               <v-card-actions>
                 <v-spacer />
                 <v-btn 
-                @click='submitRegister' 
+                @click='submitRegister()' 
                 color="primary">
                 Register
+                </v-btn>
+              </v-card-actions>
+              <v-card-actions>
+                <v-spacer />
+                <v-btn 
+                  to='/login'
+                  color="secondary"
+                  small
+                  text
+                >
+                Have an account already?
+                <v-icon>mdi-arrow-right-bold</v-icon>
                 </v-btn>
               </v-card-actions>
               <v-alert v-if='error != null' type="error">
@@ -72,6 +91,7 @@ export default {
     return {
       email: '',
       password: '',
+      confirmPassword: '',
       error: null,
       success: null,
       showPassword: false,
@@ -82,7 +102,8 @@ export default {
   },
   methods: {
     async submitRegister() {
-      try {
+      if (this.password === this.confirmPassword) {
+        try {
           await AuthenicationService.register({
           email : this.email,
           password : this.password
@@ -91,9 +112,12 @@ export default {
         this.password = ''
         this.email = ''
         this.success = 'Thank you for registering!'
-      } catch (error){
-        this.error = error.response.data.error
-        this.success = null
+        } catch (error){
+          this.error = error.response.data.error
+          this.success = null
+        }
+      } else {
+        this.error = 'Passwords do not match'
       }
     }
   }

@@ -23,7 +23,7 @@
       <v-row  class="mt-5" >
         <v-col align="center">
             <v-avatar size="100">
-              <img src="/pete.png">
+              <!-- <img src="/pete.png"> -->
             </v-avatar>
             <p class="subtitle-2 mt-1">Pete Kurjanowicz</p>
             <div class="mt-4">

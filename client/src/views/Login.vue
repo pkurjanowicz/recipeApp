@@ -49,6 +49,18 @@
                 Login
                 </v-btn>
               </v-card-actions>
+              <v-card-actions>
+                  <v-spacer />
+                  <v-btn 
+                    to='/register'
+                    color="secondary"
+                    small
+                    text
+                  >
+                  Create an account
+                  <v-icon>mdi-arrow-right-bold</v-icon>
+                  </v-btn>
+                </v-card-actions>
               <v-alert v-if='error != null' type="error">
                   <div v-html="error" />
               </v-alert>

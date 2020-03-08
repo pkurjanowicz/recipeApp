@@ -13,6 +13,7 @@
 
 <script>
 import navBar from './components/navBar'
+import axios from 'axios'
 
 export default {
   name: 'app',
@@ -34,6 +35,13 @@ export default {
   },
   beforeUpdate() {
     this.navBarCheck()
+  },
+  mounted() {
+    axios.get('/auth').then(resp => {
+      if (resp.data.response === false) {
+        this.$router.push('/login')
+      }
+    })
   },
   watch:{
     '$route' (to, from) {

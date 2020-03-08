@@ -7,6 +7,8 @@ var indexRouter = require('./routes/index');
 var history = require('connect-history-api-fallback');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const session = require('express-session')
+const FileStore = require('session-file-store')(session)
 
 var app = express();
 
@@ -18,6 +20,13 @@ app.use(bodyParser.json())
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use(cors())
+app.use(session({
+  name:'session-id',
+  secret:'!.Pz-@h_frMpt9v',
+  saveUninitialized:false,
+  resave:false,
+  store:new FileStore()
+}))
 
 app.use('/', indexRouter);
 require('./routes')(app)

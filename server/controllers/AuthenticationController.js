@@ -37,6 +37,7 @@ module.exports = {
           where: { email: req.body.email }
         })
         if (verifyHash(req.body.password, user.password) === true) {
+          req.session.user = req.body.email
           res.status(200).send({
             success: req.body.email
           })
@@ -50,7 +51,20 @@ module.exports = {
           error: 'User not found'
         })
       }
+    },
+    async logout (req,res) {
+      try {
+        req.session.user = null;
+        res.status(200).send({
+          response: 'Session destroyed'
+        })
+      } catch (err) {
+        res.status(200).send({
+          response: 'No session to destroy'
+        })
+      }
     }
   }
+
 
 

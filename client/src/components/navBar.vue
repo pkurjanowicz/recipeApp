@@ -13,7 +13,7 @@
         <span class='primary--text'>App</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn text color="primary">
+      <v-btn text color="primary" @click='logout'>
         <span>Sign Out</span>
         <v-icon right>mdi-exit-to-app</v-icon>
       </v-btn>
@@ -51,6 +51,7 @@
 
 <script>
 import addRecipeModal from './addRecipeModal'
+import axios from 'axios'
 
 export default {
   components: { addRecipeModal },
@@ -66,5 +67,12 @@ export default {
       snackbar: false,
     }
   },
+  methods: {
+    logout() {
+      axios.get('/logout').then(() => {
+        this.$router.push('/login')
+      })
+    }
+  }
 }
 </script>

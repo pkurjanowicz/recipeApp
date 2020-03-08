@@ -376,7 +376,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var axio
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Api */ \"./src/services/Api.js\");\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n  register: function register(credentials) {\n    return Object(_Api__WEBPACK_IMPORTED_MODULE_0__[\"default\"])().post('register', credentials);\n  }\n});\n\n//# sourceURL=webpack:///./src/services/AuthenticationService.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Api */ \"./src/services/Api.js\");\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n  register: function register(credentials) {\n    return Object(_Api__WEBPACK_IMPORTED_MODULE_0__[\"default\"])().post('register', credentials);\n  },\n  login: function login(credentials) {\n    return Object(_Api__WEBPACK_IMPORTED_MODULE_0__[\"default\"])().post('login', credentials);\n  }\n});\n\n//# sourceURL=webpack:///./src/services/AuthenticationService.js?");
 
 /***/ })
 

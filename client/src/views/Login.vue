@@ -44,7 +44,7 @@
               <v-card-actions>
                 <v-spacer />
                 <v-btn 
-                @click='submitLogin' 
+                @click='submitLogin()' 
                 color="primary">
                 Login
                 </v-btn>
@@ -102,7 +102,7 @@ export default {
         this.error = null
         this.password = ''
         this.email = ''
-        this.success = 'Login successful'
+        this.$router.push('/')
       } catch (error){
         this.error = error.response.data.error
         this.success = null

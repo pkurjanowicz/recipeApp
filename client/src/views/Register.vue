@@ -111,6 +111,7 @@ export default {
         this.error = null
         this.password = ''
         this.email = ''
+        this.confirmPassword = ''
         this.success = 'Thank you for registering!'
         } catch (error){
           this.error = error.response.data.error

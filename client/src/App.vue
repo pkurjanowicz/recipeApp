@@ -2,11 +2,9 @@
   <div id="app">
     <v-app>
       <main>
+        <navBar v-if="navBarVisible"/>
         <v-container fluid>
-          <navBar v-if="navBarVisible"/>
           <router-view></router-view>
-
-          {{navBarVisible}}
         </v-container>
       </main>
     </v-app>
@@ -18,9 +16,10 @@ import navBar from './components/navBar'
 
 export default {
   name: 'app',
+  // props:['navBarVisible'],
   data() {
     return {
-      navBarVisible: true
+      navBarVisible: true,
     }
   },
   components: {
@@ -35,6 +34,13 @@ export default {
   },
   beforeUpdate() {
     this.navBarCheck()
+  },
+  watch:{
+    '$route' (to, from) {
+      if (from.path === '/login' && to.path === '/') {
+        this.navBarVisible = true
+      } 
+    }
   }
 }
 </script>

@@ -105,8 +105,7 @@ export default {
       drawer: false,
       drawerItems: [
         { text: 'Dashboard', icon: 'mdi-view-dashboard', route: '/' },
-        { text: 'My Profile', icon: 'mdi-account', route: '/profile' },
-        // { text: 'Sign Out', icon: 'mdi-exit-to-app', route:'@logout'}
+        { text: 'Group', icon: 'mdi-account-group', route: '/group' },
       ],
       snackbar: false,
     }

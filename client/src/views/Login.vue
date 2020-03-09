@@ -51,7 +51,9 @@
               <v-card-actions>
                 <v-btn 
                 @click='submitLoginGuest()' 
-                color="secondary">
+                color="secondary"
+                outlined
+                small>
                 Login as Guest
                 </v-btn>
                 <v-spacer />

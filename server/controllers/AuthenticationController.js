@@ -75,7 +75,23 @@ module.exports = {
           response: 'Unable to login'
         })
       }
-    }
+    },
+    async search (req,res) {
+      try {
+        const user = await Users.findOne({
+          where: { email: req.body.email }
+        })
+        console.log(req.body.email)
+        console.log(user)
+        res.status(200).send({
+          response: user
+        })
+      } catch (err) {
+        res.status(200).send({
+          response: 'Unable to find user'
+        })
+      }
+    },
   }
 
 

@@ -15,8 +15,8 @@ const routerOptions = [
   { path: '/login', 
     component: 'Login', 
   },
-  { path: '/profile', 
-    component: 'Profile', 
+  { path: '/group', 
+    component: 'Group', 
   },
 ]
 /* this variable actually maps the 

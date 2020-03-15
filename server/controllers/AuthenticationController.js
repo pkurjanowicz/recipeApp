@@ -104,7 +104,11 @@ module.exports = {
         const user = await Users.findOne({
           where: { email: req.session.user }
         })
-        if (user.group === null) {
+        if (req.session.user === "Guest") {
+          res.status(200).send({
+            response: "You Need to Login to Add a User"
+          })
+        } else if (user.group === null) {
           Users.update(
             {group: await lookUpID(req.body.email)},
             {where: {email: req.session.user }}

@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <v-snackbar v-model="snackbar" :timeout="4000" top color="white">
+    <v-snackbar v-model="snackbar" :timeout="4000" top color="white" max-width="100%">
       <span class="black--text">{{snackbarText}}</span>
       <v-btn text color="black" @click="snackbar = false">Close</v-btn>
     </v-snackbar>
@@ -11,6 +11,7 @@
       shrink-on-scroll
       prominent
       src="../assets/med-food-hero.jpg"
+      max-width="100%"
     >
     <template v-slot:img="{ props }">
       <v-img
@@ -25,10 +26,10 @@
       dark
     />
     
-      <v-toolbar-title class="text-uppercase bold font-weight-black display-1">
+      <!-- <v-toolbar-title class="text-uppercase bold font-weight-black display-1">
         <span class="font-weight-light white--text">Recipe</span>
         <span class='white--text'>Tracker</span>
-      </v-toolbar-title>
+      </v-toolbar-title> -->
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
 

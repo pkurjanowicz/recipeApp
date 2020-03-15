@@ -13,7 +13,7 @@
           <v-card-text>
             <v-row align='center' wrap>
               <v-col>
-                <v-responsive width="400" min-width="400">
+                <v-responsive width="400" min-width="200">
                   <v-text-field
                     prepend-icon="mdi-account-search"
                     v-model="submitEmail"
@@ -36,7 +36,7 @@
             <v-card-text>
               <v-row wrap align='center' v-if="foundUser !== null">
                 <v-col class="white pa-2" >
-                  <v-responsive width="400" min-width="400">
+                  <v-responsive width="400" min-width="200">
                     <span v-text='foundUser'></span>
                   </v-responsive>
                 </v-col>

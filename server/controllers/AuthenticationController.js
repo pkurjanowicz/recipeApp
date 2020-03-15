@@ -17,6 +17,15 @@ function verifyHash(password, original) {
   
   }
 
+async function lookUpID(emailname) {
+  try {
+    id = await Users.findOne({where: { email: emailname }})
+    return id.id
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 module.exports = {
   async register (req,res) {
     try {
@@ -81,11 +90,47 @@ module.exports = {
         const user = await Users.findOne({
           where: { email: req.body.email }
         })
-        console.log(req.body.email)
-        console.log(user)
         res.status(200).send({
           response: user
         })
+      } catch (err) {
+        res.status(200).send({
+          response: 'Unable to find user'
+        })
+      }
+    },
+    async addUserToGroup (req,res) {
+      try {
+        const user = await Users.findOne({
+          where: { email: req.session.user }
+        })
+        if (user.group === null) {
+          Users.update(
+            {group: await lookUpID(req.body.email)},
+            {where: {email: req.session.user }}
+          ).then(
+            res.status(200).send({
+              response: "Successfully Added User"
+            })
+          )
+        } else if (await lookUpID(req.body.email) === await lookUpID(req.session.user)){
+          res.status(200).send({
+            response: "You Cannot Add Yourself to Your Own Group"
+          })
+        } else if (user.group.includes(await lookUpID(req.body.email))) {
+          res.status(200).send({
+            response: "User Already Exists in Group"
+          })
+        } else {
+          Users.update(
+            {group: user.group + "," +await lookUpID(req.body.email)},
+            {where: {email: req.session.user }}
+          ).then(
+            res.status(200).send({
+              response: "Successfully Added User"
+            })
+          )
+        }
       } catch (err) {
         res.status(200).send({
           response: 'Unable to find user'

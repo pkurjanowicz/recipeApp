@@ -1,4 +1,5 @@
 <template>
+  <div>
   <v-app>
     <v-content>
       <div class="Group">
@@ -7,7 +8,7 @@
           elevation='0'
         >
           <v-card-title class="white">
-            Find Friends
+            Find Friends 
           </v-card-title>
           <v-card-text>
             <v-row align='center' wrap>
@@ -41,7 +42,7 @@
                 </v-col>
                 <v-spacer></v-spacer>
                 <v-col lg='1' md='2' sm='3'>
-                  <v-btn v-if='foundUser !== "Not Found"' @click='addUserToGroup' class="primary pa-2">
+                  <v-btn v-if='foundUser !== "Not Found"' @click='addUser' class="primary pa-2">
                     Add User
                   </v-btn>
                 </v-col>
@@ -52,42 +53,56 @@
       </div>
     </v-content>
   </v-app>
+</div>
 </template>
 
 <script>
 import axios from 'axios'
+import SearchService from '../services/SearchService'
+import { serverBus } from '../main'
 
-  export default {
-    data: () => ({
-      descriptionLimit: 60,
-      foundUser: null,
-      isLoading: false,
-      submitEmail: null,
-    }),
+export default {
+  // name: "Group",
+  data: () => ({
+    descriptionLimit: 60,
+    foundUser: null,
+    isLoading: false,
+    submitEmail: null,
+    snackbarText: '',
+  }),
 
-    methods: {
-      search() {
-        axios.post('/search', {
-          email: this.submitEmail
+  methods: {
+    search() {
+      axios.post('/search', {
+        email: this.submitEmail
+      }).then(resp => {
+        if (resp.data.response.email !== null) {
+          this.foundUser = resp.data.response.email
+          this.submitEmail = null
+        } else {
+          this.submitEmail = null
+          this.foundUser = 'Not Found'
+        }
+      }).catch(err => {
+        console.log(err)
+          this.submitEmail = null
+          this.foundUser = 'Not Found'
+      }).finally(() => (this.isLoading = false))
+    },
+    addUser() {
+      try {
+        SearchService.addUserToGroup({
+          email: this.foundUser
         }).then(resp => {
-          if (resp.data.response.email !== null) {
-            this.foundUser = resp.data.response.email
-            this.submitEmail = null
-          } else {
-            this.submitEmail = null
-            this.foundUser = 'Not Found'
-          }
-        }).catch(err => {
-          console.log(err)
-            this.submitEmail = null
-            this.foundUser = 'Not Found'
-        }).finally(() => (this.isLoading = false))
-      },
-      addUserToGroup() {
-        console.log("up")
+          this.snackbarText = resp.data.response
+          serverBus.$emit('snackBar', this.snackbarText)
+        })
+      } catch(err) {
+        console.log(err)
       }
     }
   }
+}
 </script>
 
 <style scoped>

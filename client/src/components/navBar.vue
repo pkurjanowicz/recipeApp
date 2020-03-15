@@ -1,11 +1,9 @@
 <template>
   <nav>
-
-    <v-snackbar v-model="snackbar" :timeout="4000" top color="primary">
-      <span>Project Added</span>
-      <v-btn text color="white" @click="snackbar = false">Close</v-btn>
+    <v-snackbar v-model="snackbar" :timeout="4000" top color="white">
+      <span class="black--text">{{snackbarText}}</span>
+      <v-btn text color="black" @click="snackbar = false">Close</v-btn>
     </v-snackbar>
-
     <v-app-bar 
       flat 
       app 
@@ -26,6 +24,7 @@
       x-large 
       dark
     />
+    
       <v-toolbar-title class="text-uppercase bold font-weight-black display-1">
         <span class="font-weight-light white--text">Recipe</span>
         <span class='white--text'>Tracker</span>
@@ -44,13 +43,7 @@
       <v-btn icon color="primary">
         <v-icon>mdi-dots-vertical</v-icon>
       </v-btn>
-      <!-- <v-sheet
-        id="scrolling-techniques-5"
-        class="overflow-y-auto"
-        max-height="600"
-      >
-        <v-container style="height: 1500px;"></v-container>
-      </v-sheet> -->
+      
     </v-app-bar>
 
     <v-navigation-drawer app v-model='drawer' absolute temporary>
@@ -61,9 +54,7 @@
             </v-avatar>
             <p class="subtitle-2 mt-1">Pete Kurjanowicz</p>
             <div class="mt-4">
-              <addRecipeModal 
-                @projectAdded="snackbar = true"
-              />
+              <addRecipeModal />
             </div>
         </v-col>
       </v-row>
@@ -88,6 +79,7 @@
           </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
+
   </nav>
 </template>
 
@@ -96,9 +88,12 @@
 <script>
 import addRecipeModal from './addRecipeModal'
 import axios from 'axios'
+import { serverBus } from '../main';
 
 export default {
-  components: { addRecipeModal },
+  components: { 
+    addRecipeModal
+    },
   name: 'navbar',
   data() {
     return {
@@ -108,6 +103,7 @@ export default {
         { text: 'Group', icon: 'mdi-account-group', route: '/group' },
       ],
       snackbar: false,
+      snackbarText: '',
     }
   },
   methods: {
@@ -115,7 +111,13 @@ export default {
       axios.get('/logout').then(() => {
         this.$router.push('/login')
       })
-    }
+    },
+  },
+  created() {
+    serverBus.$on('snackBar', (text) => {
+      this.snackbar = true
+      this.snackbarText = text
+    });
   }
 }
 </script>

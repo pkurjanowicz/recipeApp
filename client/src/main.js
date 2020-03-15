@@ -7,6 +7,8 @@ import 'vuetify/dist/vuetify.min.css'
 
 Vue.config.productionTip = false
 
+export const serverBus = new Vue();
+
 Vue.use(Vuetify)
 
 new Vue({

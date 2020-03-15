@@ -13,4 +13,5 @@ module.exports = (app) => {
   app.get('/logout', AuthenticationController.logout)
   app.get('/loginGuest', AuthenticationController.loginGuest)
   app.post('/search', AuthenticationController.search)
+  app.post('/addUserToGroup',AuthenticationController.addUserToGroup)
 }

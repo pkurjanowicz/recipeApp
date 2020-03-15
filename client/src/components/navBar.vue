@@ -70,9 +70,9 @@
       <v-row  class="mt-5" >
         <v-col align="center">
             <v-avatar size="100">
-              <!-- <img src="/pete.png"> -->
+              <img :src="profileData.avatar">
             </v-avatar>
-            <p class="subtitle-2 mt-1">Pete Kurjanowicz</p>
+            <p class="subtitle-2 mt-1">{{name}}</p>
             <div class="mt-4">
               <addRecipeModal />
             </div>
@@ -109,6 +109,7 @@
 import addRecipeModal from './addRecipeModal'
 import axios from 'axios'
 import { serverBus } from '../main';
+import ImgurService from '../services/ImgurService'
 
 export default {
   components: { 
@@ -127,6 +128,8 @@ export default {
       ],
       snackbar: false,
       snackbarText: '',
+      profileData: null,
+      name: '',
     }
   },
   methods: {
@@ -135,12 +138,29 @@ export default {
         this.$router.push('/login')
       })
     },
+    async getProfileData() {
+      try {
+        const response = await ImgurService.getProfileData()
+        this.profileData = response.data
+        console.log(this.profileData)
+        if (response.data.name === null) {
+          this.name = "Input Your Name"
+        } else {
+          this.name = response.data.name
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    },
   },
   created() {
     serverBus.$on('snackBar', (text) => {
       this.snackbar = true
       this.snackbarText = text
     });
+  },
+  mounted() {
+    this.getProfileData()
   }
 }
 </script>

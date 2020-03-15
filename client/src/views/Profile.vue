@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <v-content>
+
       <v-dialog v-model="dialog" max-width="500px">
         <v-card>
           <v-card-text>
@@ -22,14 +23,37 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+
+      <v-dialog v-model="inputNameDialog" max-width="500px">
+        <v-card>
+          <v-card-text>
+            <template>
+            <v-text-field
+              label="Input Name"
+              v-model="name"
+              class='pa-5'
+              @keyup.enter="addName"
+            >
+            </v-text-field>
+            </template>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn text color="primary" @click="addName()">Update Name</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
       <v-container fluid>
-        <v-row dense>
-          <v-col cols="6">
-            <v-card>
+        <v-row dense justify="start">
+
+          <v-col cols="auto" v-if="profileData.avatar !== null">
+            <v-card max-width="200px" min-width='200px'>
               <v-img
-                src="https://cdn.vuetifyjs.com/images/cards/house.jpg"
+                :src="profileData.avatar"
                 class="black--text align-start"
                 height="200px"
+                width="200px"
               >
               </v-img>
               <template >
@@ -45,12 +69,37 @@
               </v-btn>
             </template>
             </v-card>
-
           </v-col>
-          <v-col cols="6">
+
+          <v-col cols="auto" v-else>
+            <v-card max-width="200px" min-width='200px'>
+              <v-img
+                src="../assets/whitebackground2.png"
+                class="black--text align-start"
+                height="200px"
+                width="200px"
+              >
+              </v-img>
+              <template >
+              <v-btn
+                fab
+                color="primary"
+                bottom
+                right
+                absolute
+                @click="dialog = !dialog"
+              >
+                <v-icon>mdi-plus</v-icon>
+              </v-btn>
+            </template>
+            </v-card>
+          </v-col>
+
+          <v-col align-self="start">
             <v-card height="200px" class="black--text align-start">
-              <v-card-title>{{name}}</v-card-title>
-              <v-card-text>{{email}}</v-card-text>
+              <v-card-title v-if="profileData.name !== null" v-text="profileData.name" @click="inputName"></v-card-title>
+              <v-card-title v-else @click="inputName">Input Your Name</v-card-title>
+              <v-card-text v-text="profileData.email"></v-card-text>
             </v-card>
           </v-col>
 
@@ -71,8 +120,11 @@
 import axios from 'axios'
 import ImgurService from '../services/ImgurService'
 
+
 export default {
   name: 'Profile',
+  components: {
+  },
   data() {
     return {
       name: 'Pete Kurjanowicz',
@@ -83,6 +135,9 @@ export default {
       success: '',
       loading: false,
       imgurSecret: '',
+      profileData: null,
+      name: '',
+      inputNameDialog: false,
     }
   },
   methods: {
@@ -97,9 +152,14 @@ export default {
           },
         })
         .then(response => {
-          console.log(response)
-          this.loading = false
-          this.success = "Successful Upload!"
+          axios.post("/uploadProfileImg", {
+            link: response.data.data.link
+          }).then(() => {
+            this.loading = false
+            this.success = "Successful Upload!"
+            this.getProfileData()
+            this.dialog = false
+          })
         })
     },
     async getImgurSecret() {
@@ -109,14 +169,39 @@ export default {
       } catch (err) {
         console.log(err)
       }
+    },
+    async getProfileData() {
+      try {
+        const response = await ImgurService.getProfileData()
+        this.profileData = response.data
+        if (response.data.name === null) {
+          this.name = "Input Your Name"
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    inputName() {
+      this.inputNameDialog = true
+    },
+    async addName() {
+      try {
+        const response = await ImgurService.inputName({
+          name: this.name
+        })
+        this.getProfileData()
+        this.inputNameDialog = false
+      } catch (err) {
+        console.log(err)
+      }
     }
   },
-  mounted() {
+  beforeMount() {
     this.getImgurSecret()
+    this.getProfileData()
   }
 }
 </script>
 
-<style scoped>
 
-</style>
+

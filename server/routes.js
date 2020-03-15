@@ -1,5 +1,6 @@
 const AuthenticationController = require('./controllers/AuthenticationController')
 const AuthenticationControllerPolicy = require('./policies/AuthenticationConrollerPolicy')
+const ProfileController = require('./controllers/ProfileController')
 const auth = require('./controllers/auth')
 
 
@@ -14,4 +15,5 @@ module.exports = (app) => {
   app.get('/loginGuest', AuthenticationController.loginGuest)
   app.post('/search', AuthenticationController.search)
   app.post('/addUserToGroup',AuthenticationController.addUserToGroup)
+  app.get('/getImgurSecret', ProfileController.getImgurKey)
 }

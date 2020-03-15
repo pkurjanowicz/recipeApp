@@ -33,18 +33,6 @@ eval("/**\n * Copyright (c) 2014-present, Facebook, Inc.\n *\n * This source cod
 "use strict";
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ \"./node_modules/axios/index.js\");\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (function () {\n  return axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({\n    baseURL: \"http://localhost:3000/\"\n  });\n});\n\n//# sourceURL=webpack:///./src/services/Api.js?");
 
-/***/ }),
-
-/***/ "./src/services/AuthenticationService.js":
-/*!***********************************************!*\
-  !*** ./src/services/AuthenticationService.js ***!
-  \***********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Api */ \"./src/services/Api.js\");\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n  register: function register(credentials) {\n    return Object(_Api__WEBPACK_IMPORTED_MODULE_0__[\"default\"])().post('register', credentials);\n  },\n  login: function login(credentials) {\n    return Object(_Api__WEBPACK_IMPORTED_MODULE_0__[\"default\"])().post('login', credentials);\n  },\n  loginGuest: function loginGuest(credentials) {\n    return Object(_Api__WEBPACK_IMPORTED_MODULE_0__[\"default\"])().get('loginGuest', credentials);\n  }\n});\n\n//# sourceURL=webpack:///./src/services/AuthenticationService.js?");
-
 /***/ })
 
 }]);

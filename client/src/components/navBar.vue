@@ -40,10 +40,29 @@
       <v-btn icon color="primary">
         <v-icon>mdi-heart</v-icon>
       </v-btn>
-
-      <v-btn icon color="primary">
-        <v-icon>mdi-dots-vertical</v-icon>
-      </v-btn>
+      <v-menu bottom left>
+        <template v-slot:activator="{ on }">
+          <v-btn
+            color="primary"
+            icon
+            v-on="on"
+          >
+            <v-icon>mdi-dots-vertical</v-icon>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item
+            v-for="(item, i) in dotMenu"
+            :key="i"
+            :to='item.route'
+          >
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+          <v-list-item text mandatory color="primary" @click='logout'>
+          <v-list-item-title>Sign Out</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
       
     </v-app-bar>
 
@@ -69,14 +88,14 @@
                 <v-list-item-title v-text="item.text" ></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <v-list-item text mandatory color="primary" @click='logout'>
+            <!-- <v-list-item text mandatory color="primary" @click='logout'>
               <v-list-item-icon>
                 <v-icon>mdi-exit-to-app</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
                 <v-list-item-title>Sign Out</v-list-item-title>
               </v-list-item-content>
-            </v-list-item>
+            </v-list-item> -->
           </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
@@ -102,6 +121,9 @@ export default {
       drawerItems: [
         { text: 'Dashboard', icon: 'mdi-view-dashboard', route: '/' },
         { text: 'Group', icon: 'mdi-account-group', route: '/group' },
+      ],
+      dotMenu: [
+        { title: 'Profile', route: '/profile' },
       ],
       snackbar: false,
       snackbarText: '',

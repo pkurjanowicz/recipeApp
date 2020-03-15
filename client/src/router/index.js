@@ -18,6 +18,9 @@ const routerOptions = [
   { path: '/group', 
     component: 'Group', 
   },
+  { path: '/profile', 
+    component: 'Profile', 
+  },
 ]
 /* this variable actually maps the 
 route to the component in the views folder*/

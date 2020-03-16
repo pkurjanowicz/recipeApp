@@ -50,35 +50,36 @@
             </v-card-text>
           </v-expand-transition>
         </v-card>
+          <p>{{friendsData}}</p>
 
         <v-container fluid>
-      <v-row dense justify="start">
-        <v-col
-          v-for="friend in friendsData.data.data"
-          :key="friend.id"
-          cols="auto"
-          align-self="start"
-        >
-          <v-card max-width="300px" min-width='200px'>
-            <v-img
-              :src="friend.avatar"
-              class="white--text align-end"
-              gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-              height="200px"
-              width="200px"
+          <v-row dense justify="start">
+            <v-col
+              v-for="friend in friendsData.data.data"
+              :key="friend.id"
+              cols="auto"
+              align-self="start"
             >
-              <v-card-title v-text="friend.name"></v-card-title>
-            </v-img>
-            <v-card-text v-text="friend.email"></v-card-text>
-            <v-card-actions>
-              <v-btn color="primary">
-                View Recipes
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
+              <v-card max-width="300px" min-width='200px'>
+                <v-img
+                  :src="friend.avatar"
+                  class="white--text align-end"
+                  gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                  height="200px"
+                  width="200px"
+                >
+                  <v-card-title v-text="friend.name"></v-card-title>
+                </v-img>
+                <v-card-text v-text="friend.email"></v-card-text>
+                <v-card-actions>
+                  <v-btn color="primary">
+                    View Recipes
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-container>
         
       </div>
     </v-content>
@@ -128,6 +129,7 @@ export default {
           email: this.foundUser
         }).then(resp => {
           this.snackbarText = resp.data.response
+          this.getAllFriends()
           serverBus.$emit('snackBar', this.snackbarText)
         })
       } catch(err) {

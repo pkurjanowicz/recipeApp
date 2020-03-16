@@ -131,8 +131,6 @@ export default {
   },
   data() {
     return {
-      name: 'Pete Kurjanowicz',
-      email: 'pkurjanowicz1@gmail.com',
       image: '',
       dialog: false,
       file: null,

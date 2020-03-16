@@ -9,5 +9,8 @@ export default {
   },
   inputName(name) {
     return Api().post('inputName', name)
+  },
+  getAllFriends() {
+    return Api().get('getAllFriends')
   }
 }

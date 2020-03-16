@@ -50,6 +50,36 @@
             </v-card-text>
           </v-expand-transition>
         </v-card>
+
+        <v-container fluid>
+      <v-row dense justify="start">
+        <v-col
+          v-for="friend in friendsData.data.data"
+          :key="friend.id"
+          cols="auto"
+          align-self="start"
+        >
+          <v-card max-width="300px" min-width='200px'>
+            <v-img
+              :src="friend.avatar"
+              class="white--text align-end"
+              gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+              height="200px"
+              width="200px"
+            >
+              <v-card-title v-text="friend.name"></v-card-title>
+            </v-img>
+            <v-card-text v-text="friend.email"></v-card-text>
+            <v-card-actions>
+              <v-btn color="primary">
+                View Recipes
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+        
       </div>
     </v-content>
   </v-app>
@@ -60,6 +90,8 @@
 import axios from 'axios'
 import SearchService from '../services/SearchService'
 import { serverBus } from '../main'
+import ImgurService from '../services/ImgurService'
+
 
 export default {
   // name: "Group",
@@ -69,6 +101,7 @@ export default {
     isLoading: false,
     submitEmail: null,
     snackbarText: '',
+    friendsData: [],
   }),
 
   methods: {
@@ -100,7 +133,18 @@ export default {
       } catch(err) {
         console.log(err)
       }
+    },
+    async getAllFriends() {
+      try {
+        const friends = await ImgurService.getAllFriends()
+        this.friendsData = friends
+      } catch (err) {
+        console.log(err)
+      }
     }
+  },
+  mounted() {
+    this.getAllFriends()
   }
 }
 </script>

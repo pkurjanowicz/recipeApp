@@ -16,4 +16,5 @@ module.exports = (app) => {
   app.post('/uploadProfileImg',ProfileController.uploadProfileImg)
   app.get('/getProfileData', ProfileController.getProfileData)
   app.post('/inputName', ProfileController.inputName)
+  app.get('/getAllFriends', ProfileController.getAllFriends)
 }

@@ -1,5 +1,15 @@
 const {Users} = require('../models')
 
+
+async function findData(id) {
+  try {
+    user = await Users.findOne({where: { id: id }})
+    return user.dataValues
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 module.exports = { 
   async getImgurKey (req,res) {
     try {
@@ -66,6 +76,26 @@ module.exports = {
       res.status(200).send({
         error: 'User not found'
       })
+    }
+  },
+  async getAllFriends (req,res) {
+    console.log(findData("1"))
+    const allFriendData = []
+    try {
+      const user = await Users.findOne({
+        where: { email: req.session.user }
+      })
+        const friends = user.group
+        for (friend in friends) {
+          if (friend !== "0") {
+            allFriendData.push( await findData(friend))
+          }
+        }
+      res.status(200).send({
+        data : allFriendData
+      })
+    } catch (err) {
+      console.log(err)
     }
   }
 }

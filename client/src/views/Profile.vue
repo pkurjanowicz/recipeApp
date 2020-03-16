@@ -19,7 +19,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
 
-            <v-btn text color="primary" @click="addImage()">Submit</v-btn>
+            <v-btn text color="primary" @click="addImage()" @keyup.enter="addImage">Submit</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -97,8 +97,12 @@
 
           <v-col align-self="start">
             <v-card height="200px" class="black--text align-start">
-              <v-card-title v-if="profileData.name !== null" v-text="profileData.name" @click="inputName"></v-card-title>
-              <v-card-title v-else @click="inputName">Input Your Name</v-card-title>
+              <v-hover
+                v-slot:default="{ hover }"
+              >
+              <v-card-title v-if="profileData.name !== null" v-text="profileData.name" @click="inputName" :style="hover ? 'background-color:rgba(228, 115, 115, 0.2);' : 'background-color:white;'"></v-card-title>
+              <v-card-title v-else @click="inputName" :style="hover ? 'background-color:rgba(228, 115, 115, 0.2);' : 'background-color:white;'">Input Your Name</v-card-title>
+              </v-hover>
               <v-card-text v-text="profileData.email"></v-card-text>
             </v-card>
           </v-col>
@@ -174,9 +178,6 @@ export default {
       try {
         const response = await ImgurService.getProfileData()
         this.profileData = response.data
-        if (response.data.name === null) {
-          this.name = "Input Your Name"
-        }
       } catch (err) {
         console.log(err)
       }
@@ -196,12 +197,17 @@ export default {
       }
     }
   },
-  beforeMount() {
+  mounted() {
     this.getImgurSecret()
     this.getProfileData()
   }
 }
 </script>
 
+<style scoped>
+.v-card__title {
+  cursor:pointer;
+}
+</style>
 
 

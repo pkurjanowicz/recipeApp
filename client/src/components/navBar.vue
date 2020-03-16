@@ -40,7 +40,7 @@
       <v-btn icon color="primary">
         <v-icon>mdi-heart</v-icon>
       </v-btn>
-      <v-menu bottom left>
+      <v-menu bottom left >
         <template v-slot:activator="{ on }">
           <v-btn
             color="primary"
@@ -66,7 +66,7 @@
       
     </v-app-bar>
 
-    <v-navigation-drawer app v-model='drawer' absolute temporary>
+    <v-navigation-drawer app v-model='drawer' absolute temporary >
       <v-row  class="mt-5" >
         <v-col align="center">
             <v-avatar size="100">
@@ -142,7 +142,6 @@ export default {
       try {
         const response = await ImgurService.getProfileData()
         this.profileData = response.data
-        console.log(this.profileData)
         if (response.data.name === null) {
           this.name = "Input Your Name"
         } else {
@@ -161,6 +160,13 @@ export default {
   },
   mounted() {
     this.getProfileData()
+  },
+  watch: {
+    'drawer'(newVal, oldVal) {
+      if (oldVal === false) {
+        this.getProfileData()
+      }
+    }
   }
 }
 </script>

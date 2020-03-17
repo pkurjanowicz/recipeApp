@@ -83,14 +83,11 @@ module.exports = {
     try {
       const user = await Users.findOne({
         where: { email: req.session.user }
-      })
-        console.log(user.group) //Having an issue that basically the user.group returns the user group values, when I iterate through them it returns the place values of each value in the string...
-        const friends = user.group
-        for (friend in friends) {
-          console.log(friend)
-          if (friend !== "0") {
-            allFriendData.push( await findData(friend))
-          }
+      }) 
+        const friends = user.group.split(',')
+        for (i = 0; i < friends.length; i++) {
+          console.log(friends[i])
+          allFriendData.push( await findData(friends[i]))
         }
       res.status(200).send({
         data : allFriendData

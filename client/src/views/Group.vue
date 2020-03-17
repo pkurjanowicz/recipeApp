@@ -50,7 +50,6 @@
             </v-card-text>
           </v-expand-transition>
         </v-card>
-          <p>{{friendsData}}</p>
 
         <v-container fluid>
           <v-row dense justify="start">

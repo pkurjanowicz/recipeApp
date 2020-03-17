@@ -66,7 +66,7 @@
       
     </v-app-bar>
 
-    <v-navigation-drawer app v-model='drawer' absolute temporary >
+    <v-navigation-drawer app v-model='drawer' absolute temporary v-if="drawer === true">
       <v-row  class="mt-5" >
         <v-col align="center">
             <v-avatar size="100">

@@ -44,7 +44,7 @@
         </v-card>
       </v-dialog>
 
-      <v-container fluid>
+      <v-container fluid v-if="profileData">
         <v-row dense justify="start">
 
           <v-col cols="auto" v-if="profileData.avatar !== null">

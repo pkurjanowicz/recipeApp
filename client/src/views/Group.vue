@@ -51,7 +51,7 @@
           </v-expand-transition>
         </v-card>
 
-        <v-container fluid>
+        <v-container fluid v-if="friendsData !== null">
           <v-row dense justify="start">
             <v-col
               v-for="friend in friendsData.data.data"
@@ -101,7 +101,7 @@ export default {
     isLoading: false,
     submitEmail: null,
     snackbarText: '',
-    friendsData: [],
+    friendsData: null,
   }),
 
   methods: {

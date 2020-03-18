@@ -70,9 +70,9 @@
               :counter="30"
             />
             <p v-if="ingredientError" class="red--text" style="display:inline-block">{{ingredientError}}</p>
-            <span v-for="ingredient in ingredients" :key="ingredient">
+            <span v-for="(ingredient, index) in ingredients" :key="index">
               <ul>
-                <li style="display: inline-block;">{{ingredient}}</li>
+                <li style="display: inline-block;"><v-icon small>mdi-check</v-icon> {{ingredient}}</li>
                 <span style="display:inline-block">
                   <v-btn text icon @click="deleteIngredient(ingredient)">
                     <v-icon small>mdi-close-circle</v-icon>
@@ -92,15 +92,15 @@
               :rules="[() => steps.length !== 0 || currentStep !== '' || 'Steps are required',currentStep.length <= 30 || 'Step must be less than 30 characters']"
             />
             <p v-if="stepError" class="red--text" style="display:inline-block">{{stepError}}</p>
-            <span v-for="step in steps" :key="step">
-              <ul>
-                <li style="display: inline-block;">{{step}}</li>
+            <span v-for="(step, index) in steps" :key="index">
+              <ol>
+                <li style="display: inline-block;">{{index+1}}. {{step}}</li>
                 <span style="display:inline-block">
                   <v-btn text icon @click="deleteStep(step)">
                     <v-icon small>mdi-close-circle</v-icon>
                   </v-btn>
                 </span>
-              </ul>
+              </ol>
             </span>
 
             <v-file-input 

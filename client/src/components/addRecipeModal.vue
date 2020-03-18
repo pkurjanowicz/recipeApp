@@ -23,8 +23,35 @@
               :rules="nameRules"
             />
 
+            <v-text-field 
+              label="Prep Time" 
+              v-model="prepTime" 
+              prepend-icon="mdi-av-timer"
+              required
+              :rules="[v => !!v || 'Prep Time is required']"
+              :counter="20"
+            />
+
+            <v-text-field 
+              label="Cook Time" 
+              v-model="cookTime" 
+              prepend-icon="mdi-av-timer"
+              required
+              :rules="[v => !!v || 'Cook Time is required', v => (v && v.length <= 20) || 'Cook Time must be less than 20 characters']"
+              :counter="20"
+            />
+
+            <v-select
+              label="Cuisine"
+              v-model="type"
+              :items="types"
+              :rules="[v => !!v || 'Cuisine is required', v => (v && v.length <= 20) || 'Cook Time must be less than 20 characters']"
+              prepend-icon="mdi-food"
+              required
+            ></v-select>
+
             <v-textarea 
-              label="Information" 
+              label="Description" 
               v-model="content" 
               prepend-icon="mdi-lead-pencil"
               :rules="infoRules"
@@ -32,32 +59,59 @@
               required
             />
 
-            <v-menu
-              v-model="menu1"
-              :close-on-content-click="false"
-              max-width="290"
-            >
+            <v-text-field 
+              label="Ingredient" 
+              prepend-icon="mdi-format-list-bulleted"
+              v-model="currentIngredient"
+              required
+              :rules="[() => ingredients.length !== 0 || currentIngredient !== '' || 'Ingredients are required', currentIngredient.length <= 30 || 'Ingredient must be less than 30 characters']"
+              @click:append-outer="addIngredient(currentIngredient)"
+              append-outer-icon='mdi-plus'
+              :counter="30"
+            />
+            <p v-if="ingredientError" class="red--text" style="display:inline-block">{{ingredientError}}</p>
+            <span v-for="ingredient in ingredients" :key="ingredient">
+              <ul>
+                <li style="display: inline-block;">{{ingredient}}</li>
+                <span style="display:inline-block">
+                  <v-btn text icon @click="deleteIngredient(ingredient)">
+                    <v-icon small>mdi-close-circle</v-icon>
+                  </v-btn>
+                </span>
+              </ul>
+            </span>
 
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  prepend-icon="mdi-calendar"
-                  :value="computedDateFormattedMomentjs"
-                  clearable
-                  label="Date"
-                  readonly
-                  v-on="on"
-                  @click:clear="date = null"
-                  :rules="dateRules"
-                  required
-                ></v-text-field>
-              </template>
+            <v-textarea  
+              label="Step" 
+              prepend-icon="mdi-stairs"
+              v-model="currentStep"
+              required
+              @click:append-outer="addStep(currentStep)"
+              append-outer-icon='mdi-plus'
+              :counter="120"
+              :rules="[() => steps.length !== 0 || currentStep !== '' || 'Steps are required',currentStep.length <= 30 || 'Step must be less than 30 characters']"
+            />
+            <p v-if="stepError" class="red--text" style="display:inline-block">{{stepError}}</p>
+            <span v-for="step in steps" :key="step">
+              <ul>
+                <li style="display: inline-block;">{{step}}</li>
+                <span style="display:inline-block">
+                  <v-btn text icon @click="deleteStep(step)">
+                    <v-icon small>mdi-close-circle</v-icon>
+                  </v-btn>
+                </span>
+              </ul>
+            </span>
 
-              <v-date-picker
-                v-model="date"
-                @change="menu1 = false"
-              ></v-date-picker>
-
-            </v-menu>
+            <v-file-input 
+              label="Upload Picture" 
+              v-model='file' 
+              class='pa-5'
+              :success-messages='success'
+              :loading='loading'
+              @click:append-outer="addImage()"
+              append-outer-icon='mdi-send'
+            />
 
             <v-btn 
               text 
@@ -65,7 +119,7 @@
               @click="submit"
               :disabled="!valid"
             >
-            Add Project
+            Add Recipe
             </v-btn>
           </v-form>
         </v-card-text>
@@ -74,17 +128,27 @@
 </template>
 
 <script>
-import moment from 'moment'
+import axios from 'axios'
+import ImgurService from '../services/ImgurService'
+
 
 export default {
+  
   data() {
     return {
       title: '',
+      cookTime: '',
+      prepTime: '',
       content: '',
-      date: new Date().toISOString().substr(0, 10),
+      type: '',
+      currentIngredient: '',
+      currentStep: '',
       menu1: false,
       valid: true,
       dialog: false,
+      file: null,
+      loading: false,
+      image: '',
       nameRules: [
         v => !!v || 'Name is required',
         v => (v && v.length <= 20) || 'Name must be less than 20 characters',
@@ -93,8 +157,25 @@ export default {
         v => !!v || 'Information is required',
         v => (v && v.length <= 120) || 'Information must be less than 120 characters',
       ],
-      dateRules: [
-        v => !!v || 'Date is required',
+      ingredients: [],
+      steps: [],
+      ingredientError: '',
+      stepError: '',
+      success: '',
+      types: [
+        'Salads',
+        'Vegetarian',
+        'Entrees',
+        'Soups',
+        'Breads',
+        'Asian',
+        'American',
+        'Starters',
+        'Breakfast',
+        'Lunch',
+        'Dinner',
+        'Pasta',
+        'Greek',
       ],
     }
   },
@@ -113,11 +194,63 @@ export default {
     resetValidation () {
       this.$refs.form.resetValidation()
     },
-  },
-  computed: {
-    computedDateFormattedMomentjs () {
-      return this.date ? moment(this.date).format(' MMMM Do YYYY') : ''
+    addIngredient(ingredient) {
+      if (this.ingredients.includes(ingredient)) {
+        this.ingredientError = "List already includes ingredient"
+      } else if (ingredient === '') {
+        this.ingredientError = "You need to submit a value"
+      } else {  
+        this.ingredients.push(ingredient);
+        this.ingredientError = ''
+        this.currentIngredient = ''
+      }
     },
+    deleteIngredient(ingredient) {
+      this.ingredients = this.ingredients.filter(item => item !== ingredient)
+      this.ingredientError = ''
+    },
+    addStep(step) {
+      if (this.steps.includes(step)) {
+        this.stepError = "List already includes step"
+      } else if (step === '') {
+        this.stepError = "You need to submit a value"
+      } else {  
+        this.steps.push(step);
+        this.stepError = ''
+        this.currentStep = ''
+      }
+    },
+    deleteStep(step) {
+      this.steps = this.steps.filter(item => item !== step)
+      this.stepError = ''
+    },
+    async getImgurSecret() {
+      try {
+        const response = await ImgurService.getImgurSecret()
+        this.imgurSecret = response.data.success
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    addImage() {
+      this.loading = true
+      let formData = new FormData();
+      formData.append('image', this.file);
+      axios.post('https://api.imgur.com/3/image', formData, {
+        headers: {
+          'Authorization': this.imgurSecret,
+          'Content-Type': 'multipart/form-data'
+          },
+        })
+        .then(response => {
+          this.image = response.data.data.link
+          this.loading = false
+          this.success = "Successful Upload!"
+        })
+    },
+  },
+  mounted() {
+    this.getImgurSecret()
   }
 }
 </script>

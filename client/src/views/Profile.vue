@@ -188,6 +188,7 @@ export default {
         const response = await ImgurService.inputName({
           name: this.name
         })
+        console.log(response)
         this.getProfileData()
         this.inputNameDialog = false
       } catch (err) {

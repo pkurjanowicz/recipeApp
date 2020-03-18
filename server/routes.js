@@ -1,6 +1,7 @@
 const AuthenticationController = require('./controllers/AuthenticationController')
 const AuthenticationControllerPolicy = require('./policies/AuthenticationConrollerPolicy')
 const ProfileController = require('./controllers/ProfileController')
+const RecipesController = require('./controllers/RecipesController')
 const auth = require('./controllers/auth')
 
 

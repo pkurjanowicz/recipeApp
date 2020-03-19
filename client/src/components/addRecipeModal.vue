@@ -118,15 +118,14 @@
               class='pa-5'
               :success-messages='success'
               :loading='loading'
-              @click:append-outer="addImage()"
-              append-outer-icon='mdi-send'
             />
 
             <v-btn 
               text 
               class="primary mt-10 mb-5" 
-              @click="addRecipe()"
+              @click="addImage()"
               :disabled="!valid"
+              :loading='loading'
             >
             Add Recipe
             </v-btn>
@@ -140,6 +139,7 @@
 import axios from 'axios'
 import ImgurService from '../services/ImgurService'
 import RecipeService from '../services/RecipesService'
+import { serverBus } from '../main'
 
 
 export default {
@@ -189,6 +189,7 @@ export default {
         'Greek',
       ],
       serving: ["1","2","3","4","5","6","7","8","9","10"],
+      snackbarText: '',
     }
   },
   methods: {
@@ -256,12 +257,12 @@ export default {
         })
         .then(response => {
           this.image = response.data.data.link
-          this.loading = false
           this.success = "Successful Upload!"
+          this.addRecipe()
+          this.loading = false
         })
     },
     async addRecipe() {
-      console.log("clicked")
       try {
         await RecipeService.addRecipe({
           title: this.title,
@@ -274,16 +275,18 @@ export default {
           steps: this.steps,
           photo: this.image,
         }).then(resp => {
-          // this.title = ''
-          // this.cookTime = ''
-          // this.prepTime =''
-          // this.type = ''
-          // this.servings = ''
-          // this.content = ''
-          // this.ingredients = ''
-          // this.steps = ''
-          // this.image = ''
-          console.log(resp)
+          this.title = ''
+          this.cookTime = ''
+          this.prepTime =''
+          this.type = ''
+          this.servings = ''
+          this.content = ''
+          this.ingredients = ''
+          this.steps = ''
+          this.image = ''
+          this.dialog = false
+          this.snackbarText = "Successfully Submitted Recipe"
+          serverBus.$emit('snackBar', this.snackbarText)
         })
       } catch (err) {
         console.log(err)

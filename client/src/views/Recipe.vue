@@ -7,9 +7,10 @@
           <v-col cols="12">
               <v-card-title class="text-capitalize mb-1 display-2">{{recipeData.title}}</v-card-title>
               <v-card-text class="title">{{recipeData.description}}</v-card-text>
+              <v-card-text >By {{recipeData.writer}}</v-card-text>
           </v-col>
         </v-row>
-        
+
         <v-row justify="start">
           <v-img
             :src="recipeData.photo"

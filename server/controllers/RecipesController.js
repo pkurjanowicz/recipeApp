@@ -39,7 +39,7 @@ module.exports = {
   async getSingleRecipe (req, res) {
     try {
       const recipe = await Recipes.findOne({
-        id: req.body.id
+        where: { id: req.body.id }
       })
       res.status(200).send({
         success: recipe

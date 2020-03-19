@@ -6,5 +6,8 @@ export default {
   },
   getAllRecipes() {
     return Api().get('getAllRecipes')
+  },
+  getSingleRecipe(id) {
+    return Api().post('getSingleRecipe', id)
   }
 }

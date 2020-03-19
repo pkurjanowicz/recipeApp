@@ -20,4 +20,5 @@ module.exports = (app) => {
   app.get('/getAllFriends', ProfileController.getAllFriends)
   app.post('/addRecipe', RecipesController.addRecipe)
   app.get('/getAllRecipes', RecipesController.getAllRecipes)
+  app.post('/getSingleRecipe', RecipesController.getSingleRecipe)
 }

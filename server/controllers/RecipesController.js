@@ -35,5 +35,17 @@ module.exports = {
     } catch (err) {
       console.log(err)
     }
+  },
+  async getSingleRecipe (req, res) {
+    try {
+      const recipe = await Recipes.findOne({
+        id: req.body.id
+      })
+      res.status(200).send({
+        success: recipe
+      })
+    } catch (err) {
+      console.log(err)
+    }
   }
 }

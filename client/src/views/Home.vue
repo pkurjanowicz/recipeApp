@@ -7,7 +7,7 @@
             v-for="(recipe, index) in recipes"
             :key="index"
           >
-            <v-card width="400px" height='300px'>
+            <v-card width="400px" height='300px' @click="goToRecipePage(recipe.id)">
               <v-img
                 :src="recipe.photo"
                 class="white--text align-end"
@@ -54,6 +54,9 @@ export default {
       } catch (err) {
         console.log(err)
       }
+    },
+    goToRecipePage(id) {
+      this.$router.push(`/recipe/?id=${id}`)
     }
   },
   created() {

@@ -7,8 +7,8 @@ module.exports = (sequelize, DataTypes) => {
     type: DataTypes.STRING,
     servings: DataTypes.STRING,
     description: DataTypes.STRING,
-    ingredients: DataTypes.STRING,
-    steps: DataTypes.STRING,
+    ingredients: DataTypes.ARRAY(DataTypes.STRING), 
+    steps: DataTypes.ARRAY(DataTypes.STRING),
     photo: DataTypes.STRING,
     likes: DataTypes.INTEGER,
   })

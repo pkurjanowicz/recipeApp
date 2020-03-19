@@ -18,4 +18,5 @@ module.exports = (app) => {
   app.get('/getProfileData', ProfileController.getProfileData)
   app.post('/inputName', ProfileController.inputName)
   app.get('/getAllFriends', ProfileController.getAllFriends)
+  app.post('/addRecipe', RecipesController.addRecipe)
 }

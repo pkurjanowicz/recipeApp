@@ -28,7 +28,7 @@
               v-model="prepTime" 
               prepend-icon="mdi-av-timer"
               required
-              :rules="[v => !!v || 'Prep Time is required']"
+              :rules="[v => !!v || 'Prep Time is required', v => (v && v.length <= 20) || 'Prep Time must be less than 20 characters']"
               :counter="20"
             />
 
@@ -42,10 +42,19 @@
             />
 
             <v-select
+              label="Servings"
+              v-model="servings"
+              :items="serving"
+              :rules="[v => !!v || 'Servings is required']"
+              prepend-icon="mdi-account-group-outline"
+              required
+            ></v-select>
+
+            <v-select
               label="Cuisine"
               v-model="type"
               :items="types"
-              :rules="[v => !!v || 'Cuisine is required', v => (v && v.length <= 20) || 'Cook Time must be less than 20 characters']"
+              :rules="[v => !!v || 'Cuisine is required']"
               prepend-icon="mdi-food"
               required
             ></v-select>
@@ -89,10 +98,10 @@
               @click:append-outer="addStep(currentStep)"
               append-outer-icon='mdi-plus'
               :counter="120"
-              :rules="[() => steps.length !== 0 || currentStep !== '' || 'Steps are required',currentStep.length <= 30 || 'Step must be less than 30 characters']"
+              :rules="[() => steps.length !== 0 || currentStep !== '' || 'Steps are required',currentStep.length <= 120 || 'Step must be less than 30 characters']"
             />
             <p v-if="stepError" class="red--text" style="display:inline-block">{{stepError}}</p>
-            <span v-for="(step, index) in steps" :key="index">
+            <span v-for="(step, index) in steps" :key="step">
               <ol>
                 <li style="display: inline-block;">{{index+1}}. {{step}}</li>
                 <span style="display:inline-block">
@@ -116,7 +125,7 @@
             <v-btn 
               text 
               class="primary mt-10 mb-5" 
-              @click="submit"
+              @click="addRecipe()"
               :disabled="!valid"
             >
             Add Recipe
@@ -130,6 +139,7 @@
 <script>
 import axios from 'axios'
 import ImgurService from '../services/ImgurService'
+import RecipeService from '../services/RecipesService'
 
 
 export default {
@@ -139,6 +149,7 @@ export default {
       title: '',
       cookTime: '',
       prepTime: '',
+      servings: '',
       content: '',
       type: '',
       currentIngredient: '',
@@ -177,6 +188,7 @@ export default {
         'Pasta',
         'Greek',
       ],
+      serving: ["1","2","3","4","5","6","7","8","9","10"],
     }
   },
   methods: {
@@ -248,6 +260,35 @@ export default {
           this.success = "Successful Upload!"
         })
     },
+    async addRecipe() {
+      console.log("clicked")
+      try {
+        await RecipeService.addRecipe({
+          title: this.title,
+          cook_time: this.cookTime,
+          prep_time: this.prepTime,
+          type: this.type,
+          servings: this.servings,
+          description: this.content,
+          ingredients: this.ingredients,
+          steps: this.steps,
+          photo: this.image,
+        }).then(resp => {
+          // this.title = ''
+          // this.cookTime = ''
+          // this.prepTime =''
+          // this.type = ''
+          // this.servings = ''
+          // this.content = ''
+          // this.ingredients = ''
+          // this.steps = ''
+          // this.image = ''
+          console.log(resp)
+        })
+      } catch (err) {
+        console.log(err)
+      }
+    }
   },
   mounted() {
     this.getImgurSecret()

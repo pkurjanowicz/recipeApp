@@ -8,6 +8,7 @@ import 'vuetify/dist/vuetify.min.css'
 Vue.config.productionTip = false
 
 export const serverBus = new Vue();
+export const homePageRefresh = new Vue();
 
 Vue.use(Vuetify)
 

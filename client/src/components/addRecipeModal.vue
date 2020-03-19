@@ -140,6 +140,7 @@ import axios from 'axios'
 import ImgurService from '../services/ImgurService'
 import RecipeService from '../services/RecipesService'
 import { serverBus } from '../main'
+import { homePageRefresh } from '../main'
 
 
 export default {
@@ -287,6 +288,7 @@ export default {
           this.dialog = false
           this.snackbarText = "Successfully Submitted Recipe"
           serverBus.$emit('snackBar', this.snackbarText)
+          homePageRefresh.$emit('homePageRefresh')
         })
       } catch (err) {
         console.log(err)

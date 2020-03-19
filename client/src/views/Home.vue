@@ -34,6 +34,7 @@
 
 <script>
 import RecipeService from '../services/RecipesService'
+import { homePageRefresh } from '../main'
 
 export default {
   name: 'Home',
@@ -54,6 +55,11 @@ export default {
         console.log(err)
       }
     }
+  },
+  created() {
+    homePageRefresh.$on('homePageRefresh', () => {
+      this.getAllRecipes()
+    });
   },
   mounted() {
     this.getAllRecipes()

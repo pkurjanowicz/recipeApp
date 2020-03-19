@@ -25,5 +25,15 @@ module.exports = {
     } catch (err) {
       console.log(err)
     }
+  },
+  async getAllRecipes (req, res) {
+    try {
+      const recipes = await Recipes.findAll()
+      res.status(200).send({
+        success: recipes
+      })
+    } catch (err) {
+      console.log(err)
+    }
   }
 }

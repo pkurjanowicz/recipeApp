@@ -47,5 +47,20 @@ module.exports = {
     } catch (err) {
       console.log(err)
     }
+  },
+  async getUserRecipes (req, res) {
+    try {
+      const user = await Users.findOne({
+        where: { email: req.session.user }
+      })
+      const recipes = await Recipes.findAll({
+        where: { writer: user.email }
+      })
+      res.status(200).send({
+        success: recipes
+      })
+    } catch (err) {
+      console.log(err)
+    }
   }
 }

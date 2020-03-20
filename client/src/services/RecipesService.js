@@ -9,5 +9,8 @@ export default {
   },
   getSingleRecipe(id) {
     return Api().post('getSingleRecipe', id)
+  },
+  getUserRecipes() {
+    return Api().get('getUserRecipes')
   }
 }

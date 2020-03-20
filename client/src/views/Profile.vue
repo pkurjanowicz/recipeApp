@@ -45,7 +45,7 @@
       </v-dialog>
 
       <v-container fluid v-if="profileData">
-        <v-row dense justify="start">
+        <v-row dense justify="start" class="pa-5">
 
           <v-col cols="auto" v-if="profileData.avatar !== null">
             <v-card max-width="200px" min-width='200px'>
@@ -106,15 +106,21 @@
               <v-card-text v-text="profileData.email"></v-card-text>
             </v-card>
           </v-col>
+        </v-row>
 
+        <v-row class="pa-5">
           <v-col cols="12">
-            <v-card height="200px" class="black--text align-start">
-              <v-card-title >Recipes</v-card-title>
-              <v-card-text></v-card-text>
+            <v-card class="black--text align-start" flat>
+              <v-card-title class="display-1">Recipes</v-card-title>
+            </v-card>
+            <v-card @click="goToRecipePage(recipe.id)" outlined v-for="recipe in recipes" :key="recipe.id" class="ma-2">
+                <v-card-title class="subtitle-1">{{ recipe.title }}</v-card-title>
             </v-card>
           </v-col>
-
         </v-row>
+
+
+
       </v-container>
     </v-content>
   </v-app>
@@ -123,6 +129,7 @@
 <script>
 import axios from 'axios'
 import ImgurService from '../services/ImgurService'
+import RecipeService from '../services/RecipesService'
 
 
 export default {
@@ -140,6 +147,7 @@ export default {
       profileData: null,
       name: '',
       inputNameDialog: false,
+      recipes: [],
     }
   },
   methods: {
@@ -188,17 +196,28 @@ export default {
         const response = await ImgurService.inputName({
           name: this.name
         })
-        console.log(response)
         this.getProfileData()
         this.inputNameDialog = false
       } catch (err) {
         console.log(err)
       }
+    },
+    async getUserRecipes() {
+      try {
+        const response = await RecipeService.getUserRecipes()
+        this.recipes = response.data.success
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    goToRecipePage(id) {
+      this.$router.push(`/recipe/?id=${id}`)
     }
   },
   mounted() {
     this.getImgurSecret()
     this.getProfileData()
+    this.getUserRecipes()
   }
 }
 </script>

@@ -21,4 +21,5 @@ module.exports = (app) => {
   app.post('/addRecipe', RecipesController.addRecipe)
   app.get('/getAllRecipes', RecipesController.getAllRecipes)
   app.post('/getSingleRecipe', RecipesController.getSingleRecipe)
+  app.get('/getUserRecipes', RecipesController.getUserRecipes)
 }

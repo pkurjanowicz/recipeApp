@@ -41,9 +41,6 @@ export default {
     }
   },
   methods: {
-    submit() {
-      console.log('Friend added')
-    },
     async searchAccount() {
       try {
           await SearchService.search({

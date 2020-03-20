@@ -50,7 +50,6 @@ export default {
       try { 
         const response = await RecipeService.getAllRecipes()
         this.recipes = response.data.success
-        console.log(this.recipes)
       } catch (err) {
         console.log(err)
       }

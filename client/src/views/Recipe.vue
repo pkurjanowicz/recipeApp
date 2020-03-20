@@ -97,7 +97,6 @@ export default {
       }
     },
     async likeRecipe(id) {
-              console.log("got here")
       try {
         const response = await RecipeService.likeRecipe({
           id: id

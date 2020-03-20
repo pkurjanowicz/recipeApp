@@ -29,9 +29,9 @@
         </v-card>
       </v-container>
 
-    <v-container v-else>
+    <v-container v-if="recipes == ''">
       <v-card flat>
-        <v-card-title class="profile-1">No Liked Recipes</v-card-title>
+        <v-card-title class="profile-1">No Recipes yet</v-card-title>
       </v-card>
     </v-container>
 
@@ -49,9 +49,12 @@ export default {
     }
   },
   methods: {
-    async getLikedRecipes() {
+    async getFriendRecipes() {
+      const urlParams = new URLSearchParams(window.location.search);
       try {
-        const response = await RecipeService.getLikedRecipes()
+        const response = await RecipeService.getFriendRecipes({
+          id: urlParams.get('friend_id')
+        })
         this.recipes = response.data.success
       } catch (err) {
         console.log(err)
@@ -62,7 +65,7 @@ export default {
     }
   },
   mounted() {
-    this.getLikedRecipes()
+    this.getFriendRecipes()
   }
 }
 </script>

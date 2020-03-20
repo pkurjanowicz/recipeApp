@@ -11,6 +11,7 @@ async function findData(id) {
   }
 }
 
+
 module.exports = { 
   async addRecipe(req, res) {
     try {
@@ -129,4 +130,20 @@ module.exports = {
       console.log(err)
     }
   },
+  async getFriendRecipes (req, res) {
+    try {
+      const friend = await Users.findOne({
+        where: { id : req.body.id }
+      })
+      const recipes = await Recipes.findAll({
+        where: { writer : friend.email}
+      })
+      console.log(recipes)
+      res.status(200).send({
+        success: recipes
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
 }

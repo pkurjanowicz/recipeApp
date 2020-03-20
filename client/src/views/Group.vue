@@ -71,7 +71,7 @@
                 </v-img>
                 <v-card-text v-text="friend.email"></v-card-text>
                 <v-card-actions>
-                  <v-btn color="primary">
+                  <v-btn color="primary" @click="goToFriendsPage(friend.id)">
                     View Recipes
                   </v-btn>
                 </v-card-actions>
@@ -139,9 +139,13 @@ export default {
       try {
         const friends = await ImgurService.getAllFriends()
         this.friendsData = friends
+        console.log(this.friendsData)
       } catch (err) {
         console.log(err)
       }
+    },
+    goToFriendsPage(id) {
+      this.$router.push(`/friend/?friend_id=${id}`)
     }
   },
   mounted() {

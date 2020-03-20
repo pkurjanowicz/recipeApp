@@ -116,6 +116,9 @@
             <v-card @click="goToRecipePage(recipe.id)" outlined v-for="recipe in recipes" :key="recipe.id" class="ma-2">
                 <v-card-title class="subtitle-1">{{ recipe.title }}</v-card-title>
             </v-card>
+            <v-card v-if="recipes == ''" class="ma-2" flat>
+                <v-card-title class="subtitle-1">Please Add in Recipes</v-card-title>
+            </v-card>
           </v-col>
         </v-row>
 
@@ -147,7 +150,7 @@ export default {
       profileData: null,
       name: '',
       inputNameDialog: false,
-      recipes: [],
+      recipes: "",
     }
   },
   methods: {

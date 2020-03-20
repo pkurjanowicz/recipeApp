@@ -1,6 +1,16 @@
 const {Recipes} = require('../models')
 const {Users} = require('../models')
 
+
+async function findData(id) {
+  try {
+    recipe = await Recipes.findOne({where: { id: id }})
+    return recipe.dataValues
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 module.exports = { 
   async addRecipe(req, res) {
     try {
@@ -99,6 +109,24 @@ module.exports = {
       res.status(200).send({
         response: 'Unable to like recipe'
       })
+    }
+  },
+  async getLikedRecipes (req, res) {
+    const allLikedRecipes = []
+    try {
+      const user = await Users.findOne({
+        where: { email: req.session.user }
+      })
+      const recipes = user.liked_recipes.split(',')
+      for (i = 0; i < recipes.length; i++) {
+        console.log(recipes[i])
+        allLikedRecipes.push( await findData(recipes[i]))
+      }
+      res.status(200).send({
+        success: allLikedRecipes
+      })
+    } catch (err) {
+      console.log(err)
     }
   },
 }

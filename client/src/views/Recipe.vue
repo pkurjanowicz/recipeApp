@@ -97,10 +97,10 @@ export default {
       }
     },
     async likeRecipe(id) {
-      const urlParams = new URLSearchParams(window.location.search);
+              console.log("got here")
       try {
         const response = await RecipeService.likeRecipe({
-          id: urlParams.get('id')
+          id: id
         })
         this.snackbarText = response.data.response
         serverBus.$emit('snackBar', this.snackbarText)

@@ -24,6 +24,9 @@ const routerOptions = [
   { path: '/recipe', 
     component: 'Recipe', 
   },
+  { path: '/liked', 
+    component: 'Liked', 
+  },
 ]
 /* this variable actually maps the 
 route to the component in the views folder*/

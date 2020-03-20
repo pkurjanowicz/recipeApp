@@ -15,5 +15,8 @@ export default {
   },
   likeRecipe(id) {
     return Api().post('likeRecipe', id)
+  },
+  getLikedRecipes() {
+    return Api().get('getLikedRecipes')
   }
 }

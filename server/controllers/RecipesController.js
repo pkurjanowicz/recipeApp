@@ -62,5 +62,43 @@ module.exports = {
     } catch (err) {
       console.log(err)
     }
-  }
+  },
+  async likeRecipe (req,res) {
+    try {
+      const user = await Users.findOne({
+        where: { email: req.session.user }
+      })
+      if (req.session.user === "Guest") {
+        res.status(200).send({
+          response: "You Need to Login to Like a Recipe"
+        })
+      } else if (user.liked_recipes === null) {
+        Users.update(
+          {liked_recipes: req.body.id},
+          {where: {email: req.session.user }}
+        ).then(
+          res.status(200).send({
+            response: "Successfully Liked Recipe"
+          })
+        ) 
+      } else if (user.liked_recipes.includes(req.body.id)) {
+        res.status(200).send({
+          response: "Recipe Already Liked"
+        })
+      } else {
+        Users.update(
+          {liked_recipes: user.liked_recipes + "," + req.body.id},
+          {where: {email: req.session.user }}
+        ).then(
+          res.status(200).send({
+            response: "Successfully Liked Recipe"
+          })
+        )
+      }
+    } catch (err) {
+      res.status(200).send({
+        response: 'Unable to like recipe'
+      })
+    }
+  },
 }

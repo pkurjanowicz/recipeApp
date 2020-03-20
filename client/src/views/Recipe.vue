@@ -5,9 +5,14 @@
 
         <v-row>
           <v-col cols="12">
-              <v-card-title class="text-capitalize mb-1 display-2">{{recipeData.title}}</v-card-title>
+              <v-card-title class="text-capitalize mb-1 display-2">
+                {{recipeData.title}}
+                <v-btn icon large color="primary" @click="likeRecipe(recipeData.id)">
+                  <v-icon large>mdi-heart</v-icon>
+                </v-btn>
+              </v-card-title>
+              <v-card-text >By {{recipeData.writer}}</v-card-text>              
               <v-card-text class="title">{{recipeData.description}}</v-card-text>
-              <v-card-text >By {{recipeData.writer}}</v-card-text>
           </v-col>
         </v-row>
 
@@ -69,13 +74,14 @@
 
 <script>
 import RecipeService from '../services/RecipesService'
-
+import { serverBus } from '../main'
 
 export default {
   name: 'Profile',
   data() {
     return {
       recipeData: [],
+      snackbarText: '',
     }
   },
   methods: {
@@ -85,12 +91,23 @@ export default {
         const response = await RecipeService.getSingleRecipe({
           id: urlParams.get('id')
         })
-        console.log(response.data.success)
         this.recipeData = response.data.success
       } catch (err) {
         console.log(err)
       }
-    } 
+    },
+    async likeRecipe(id) {
+      const urlParams = new URLSearchParams(window.location.search);
+      try {
+        const response = await RecipeService.likeRecipe({
+          id: urlParams.get('id')
+        })
+        this.snackbarText = response.data.response
+        serverBus.$emit('snackBar', this.snackbarText)
+      } catch (err) {
+        console.log(err)
+      }
+    }
   },
   mounted() {
     this.getSingleRecipe()

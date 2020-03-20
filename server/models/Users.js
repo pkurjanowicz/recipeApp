@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     group: DataTypes.STRING,
     avatar: DataTypes.STRING,
     name: DataTypes.STRING,
+    liked_recipes: DataTypes.STRING,
   })
   return Users;
 };

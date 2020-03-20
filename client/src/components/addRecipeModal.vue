@@ -19,7 +19,7 @@
               v-model="title" 
               prepend-icon="mdi-format-title"
               required
-              :counter="20"
+              :counter="40"
               :rules="nameRules"
             />
 
@@ -163,7 +163,7 @@ export default {
       image: '',
       nameRules: [
         v => !!v || 'Name is required',
-        v => (v && v.length <= 20) || 'Name must be less than 20 characters',
+        v => (v && v.length <= 40) || 'Name must be less than 40 characters',
       ],
       infoRules: [
         v => !!v || 'Information is required',

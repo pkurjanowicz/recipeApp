@@ -15,11 +15,11 @@
                 height="200px"
                 
               >
-                <v-card-actions style="float: right;">
-                    <v-btn icon large color="primary">
+                <!-- <v-card-actions style="float: right;">
+                  <v-btn icon large color="primary">
                     <v-icon>mdi-heart</v-icon>
                   </v-btn>
-                </v-card-actions>
+                </v-card-actions> -->
                 <v-card-title v-text="recipe.title"></v-card-title>
               </v-img>
 

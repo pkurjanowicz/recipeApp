@@ -19,4 +19,16 @@ module.exports = {
       console.log(err)
     }
   },
+  async getAllPhotosById (req, res) {
+    try {
+      const response = await Addtionalphotos.findAll({
+        where: {recipe_id: req.body.id}
+      })
+      res.status(200).send({
+        success: response
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
 }

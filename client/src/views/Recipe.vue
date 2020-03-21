@@ -25,7 +25,7 @@
           >
           </v-img>
 
-          <v-col cols="lg-2 md-4">
+          <v-col cols="lg-2 md-4" style="min-width: 200px">
             <v-card raised>
               <v-card-text>
                 <b>Prep Time</b> : {{recipeData.prep_time}}
@@ -41,8 +41,16 @@
         </v-row>
 
         <v-row>
-          <v-col cols="lg-6 md-12">
-            <addPhotoModal/>
+          <v-col>
+            <v-card flat>
+              <span class="mr-2">
+                <viewPhotosModal/>
+              </span>
+              <span>
+                <addPhotoModal/>
+              </span>
+            </v-card>
+
           </v-col>
         </v-row>
         <br>
@@ -117,13 +125,15 @@
 import RecipeService from '../services/RecipesService'
 import CommentService from '../services/CommentService'
 import addPhotoModal from '../components/addPhotoModal'
+import viewPhotosModal from '../components/viewPhotosModal'
 import { serverBus } from '../main'
 import moment from 'moment'
 
 export default {
   name: 'Profile',
   components: {
-    addPhotoModal
+    addPhotoModal,
+    viewPhotosModal
   },
   data() {
     return {

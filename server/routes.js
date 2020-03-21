@@ -30,4 +30,5 @@ module.exports = (app) => {
   app.post('/addComment', CommentController.addComment)
   app.post('/getComments', CommentController.getComments)
   app.post('/addAdditionalPhoto', addAdditionalPhotoController.addAdditionalPhoto)
+  app.post('/getAllPhotosById', addAdditionalPhotoController.getAllPhotosById)
 }

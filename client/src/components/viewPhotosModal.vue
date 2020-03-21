@@ -3,7 +3,7 @@
     <template v-slot:activator="{ on }">
       <v-btn text v-on="on" class="primary">View Photos</v-btn>
     </template>
-      <v-card>
+      <v-card v-if="images.length > 0">
         <template>
           <v-carousel>
             <v-carousel-item
@@ -20,6 +20,11 @@
           </v-carousel>
         </template>
       </v-card>
+      <v-card v-else height="300px">
+        <v-card-title>
+          No photos yet
+        </v-card-title>
+      </v-card>
   </v-dialog>
 </template>
 
@@ -30,7 +35,7 @@ export default {
   data() {
     return {
       dialog: false,
-      images: [],
+      images: "",
     }
   },
   methods: {

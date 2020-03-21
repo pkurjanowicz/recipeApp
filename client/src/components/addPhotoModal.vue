@@ -63,6 +63,8 @@ export default {
             this.dialog = false
             this.snackbarText = 'Successfully uploaded photo'
             serverBus.$emit('snackBar', this.snackbarText)
+            this.success = ""
+            this.file = null
           })
         })
     },

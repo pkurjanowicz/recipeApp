@@ -11,6 +11,7 @@
                 v-model='file' 
                 class='pa-5'
                 :success-messages='success'
+                :error-messages='error'
                 :loading='loading'
               ></v-file-input>
             </template>
@@ -151,10 +152,12 @@ export default {
       name: '',
       inputNameDialog: false,
       recipes: "",
+      error: '',
     }
   },
   methods: {
     addImage() {
+      if (this.file !== null) {
       this.loading = true
       let formData = new FormData();
       formData.append('image', this.file);
@@ -174,6 +177,9 @@ export default {
             this.dialog = false
           })
         })
+      } else {
+        this.error = "Please input a file"
+      }
     },
     async getImgurSecret() {
       try {

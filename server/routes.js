@@ -3,6 +3,7 @@ const AuthenticationControllerPolicy = require('./policies/AuthenticationConroll
 const ProfileController = require('./controllers/ProfileController')
 const RecipesController = require('./controllers/RecipesController')
 const CommentController = require('./controllers/CommentController')
+const addAdditionalPhotoController = require('./controllers/AdditionalPhotoController')
 const auth = require('./controllers/auth')
 
 
@@ -28,4 +29,5 @@ module.exports = (app) => {
   app.post('/getFriendRecipes', RecipesController.getFriendRecipes)
   app.post('/addComment', CommentController.addComment)
   app.post('/getComments', CommentController.getComments)
+  app.post('/addAdditionalPhoto', addAdditionalPhotoController.addAdditionalPhoto)
 }

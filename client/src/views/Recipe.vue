@@ -39,6 +39,12 @@
             </v-card>
           </v-col>
         </v-row>
+
+        <v-row>
+          <v-col cols="lg-6 md-12">
+            <addPhotoModal/>
+          </v-col>
+        </v-row>
         <br>
         <hr>
         <v-row>
@@ -86,6 +92,7 @@
             </v-form>
           </v-col>
         </v-row>
+
         <v-row>
           <v-col cols="lg-6 md-12">
             <v-card v-for="comment in comments" :key="comment.id" shaped class="ma-2" style="background-color: rgba(247, 213, 213, 0.612);">
@@ -109,11 +116,15 @@
 <script>
 import RecipeService from '../services/RecipesService'
 import CommentService from '../services/CommentService'
+import addPhotoModal from '../components/addPhotoModal'
 import { serverBus } from '../main'
 import moment from 'moment'
 
 export default {
   name: 'Profile',
+  components: {
+    addPhotoModal
+  },
   data() {
     return {
       recipeData: [],

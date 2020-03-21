@@ -2,6 +2,7 @@ const AuthenticationController = require('./controllers/AuthenticationController
 const AuthenticationControllerPolicy = require('./policies/AuthenticationConrollerPolicy')
 const ProfileController = require('./controllers/ProfileController')
 const RecipesController = require('./controllers/RecipesController')
+const CommentController = require('./controllers/CommentController')
 const auth = require('./controllers/auth')
 
 
@@ -25,4 +26,6 @@ module.exports = (app) => {
   app.post('/likeRecipe', RecipesController.likeRecipe)
   app.get('/getLikedRecipes', RecipesController.getLikedRecipes)
   app.post('/getFriendRecipes', RecipesController.getFriendRecipes)
+  app.post('/addComment', CommentController.addComment)
+  app.post('/getComments', CommentController.getComments)
 }

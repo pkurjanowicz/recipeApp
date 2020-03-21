@@ -54,7 +54,7 @@
 
         <hr>
         <v-row>
-          <v-col cols="6">
+          <v-col cols="lg-6 md-12">
             <v-card-title>Steps</v-card-title>
             <ol v-for="(step, index) in recipeData.steps" :key="index" style="list-style: none;">
               <v-card outlined class="ma-2">
@@ -67,6 +67,40 @@
           </v-col>
         </v-row>
 
+        <hr>
+        <v-row>
+          <v-col>
+            <v-form 
+            class="px-10" 
+            ref="form"
+          >
+              <v-text-field 
+              label="Write Comment" 
+              v-model="comment" 
+              prepend-icon="mdi-comment"
+              append-outer-icon="mdi-send"
+              @click:append-outer="addComment"
+              required
+            />
+
+            </v-form>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="lg-6 md-12">
+            <v-card v-for="comment in comments" :key="comment.id" shaped class="ma-2" style="background-color: rgba(247, 213, 213, 0.612);">
+              <v-card-text class="headline">
+                {{comment.comment}}
+              </v-card-text>
+              <v-card-text>
+                {{comment.writer}}
+                <br>
+                {{convertDate(comment.createdAt)}}                
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
+
       </v-container>
     </v-content>
   </v-app>
@@ -74,7 +108,9 @@
 
 <script>
 import RecipeService from '../services/RecipesService'
+import CommentService from '../services/CommentService'
 import { serverBus } from '../main'
+import moment from 'moment'
 
 export default {
   name: 'Profile',
@@ -82,6 +118,8 @@ export default {
     return {
       recipeData: [],
       snackbarText: '',
+      comments: [],
+      comment: '',
     }
   },
   methods: {
@@ -92,6 +130,7 @@ export default {
           id: urlParams.get('id')
         })
         this.recipeData = response.data.success
+        this.getComments()
       } catch (err) {
         console.log(err)
       }
@@ -106,6 +145,33 @@ export default {
       } catch (err) {
         console.log(err)
       }
+    },
+    async addComment() {
+      try {
+        const response = await CommentService.addComment({
+          comment: this.comment,
+          recipe_id: this.recipeData.id
+        })
+        this.comment = ""
+        this.snackbarText = response.data.success
+        serverBus.$emit('snackBar', this.snackbarText)
+        this.getComments()
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    async getComments() {
+      try {
+        const response = await CommentService.getComments({
+          recipe_id: this.recipeData.id
+        })
+        this.comments = response.data.success
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    convertDate(date) {
+      return moment(date).format('MMM DD YYYY')
     }
   },
   mounted() {

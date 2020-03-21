@@ -196,7 +196,7 @@ export default {
     },
     async addName() {
       try {
-        const response = await ImgurService.inputName({
+        await ImgurService.inputName({
           name: this.name
         })
         this.getProfileData()

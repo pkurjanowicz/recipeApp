@@ -33,14 +33,14 @@
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
 
-      <v-btn icon color="primary">
+      <!-- <v-btn icon color="primary">
         <v-icon>mdi-magnify</v-icon>
-      </v-btn>
+      </v-btn> -->
 
-      <v-btn icon color="primary" @click="goToLikedPage()">
+      <!-- <v-btn icon color="primary" @click="goToLikedPage()">
         <v-icon>mdi-heart</v-icon>
-      </v-btn>
-      <v-menu bottom left >
+      </v-btn> -->
+      <!-- <v-menu bottom left >
         <template v-slot:activator="{ on }">
           <v-btn
             color="primary"
@@ -62,7 +62,7 @@
           <v-list-item-title>Sign Out</v-list-item-title>
           </v-list-item>
         </v-list>
-      </v-menu>
+      </v-menu> -->
       
     </v-app-bar>
 
@@ -88,14 +88,22 @@
                 <v-list-item-title v-text="item.text" ></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <!-- <v-list-item text mandatory color="primary" @click='logout'>
+            <v-list-item text mandatory color="primary" @click="goToLikedPage()">
+              <v-list-item-icon>
+                <v-icon>mdi-heart</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>Liked</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item text mandatory color="primary" @click='logout'>
               <v-list-item-icon>
                 <v-icon>mdi-exit-to-app</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
                 <v-list-item-title>Sign Out</v-list-item-title>
               </v-list-item-content>
-            </v-list-item> -->
+            </v-list-item>
           </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
@@ -122,6 +130,7 @@ export default {
       drawerItems: [
         { text: 'Dashboard', icon: 'mdi-view-dashboard', route: '/' },
         { text: 'Group', icon: 'mdi-account-group', route: '/group' },
+        { text: 'Profile', icon: 'mdi-account', route: '/profile' },
       ],
       dotMenu: [
         { title: 'Profile', route: '/profile' },

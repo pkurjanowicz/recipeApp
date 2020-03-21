@@ -57,11 +57,11 @@ export default {
           axios.post("/addAdditionalPhoto", {
             photo: response.data.data.link,
             recipe_id: urlParams.get('id')
-          }).then(() => {
+          }).then(resp => {
             this.loading = false
             this.success = "Successful Upload!"
             this.dialog = false
-            this.snackbarText = 'Successfully uploaded photo'
+            this.snackbarText = resp.data.success
             serverBus.$emit('snackBar', this.snackbarText)
             this.success = ""
             this.file = null

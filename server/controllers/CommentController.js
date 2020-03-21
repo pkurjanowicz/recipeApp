@@ -3,18 +3,24 @@ const {Comments} = require('../models')
 
 module.exports = { 
   async addComment (req, res) {
-    try {
-      const user = await Users.findOne({
-        where: { email: req.session.user }
-      })
-      await Comments.create({
-        writer: user.email,
-        comment: req.body.comment,
-        recipe_id: req.body.recipe_id
-      })
-      res.status(200).send({
-        success: "Successfully added comment"
-      })
+      try {
+        if (req.session.user !== "Guest") {
+        const user = await Users.findOne({
+          where: { email: req.session.user }
+        })
+        await Comments.create({
+          writer: user.email,
+          comment: req.body.comment,
+          recipe_id: req.body.recipe_id
+        })
+        res.status(200).send({
+          success: "Successfully added comment"
+        })
+      } else {
+        res.status(200).send({
+          success: "You must be logged in to submit a comment"
+        })
+      } 
     } catch (err) {
       console.log(err)
     }

@@ -52,7 +52,7 @@ export default {
     }
   },
   watch: {
-    dialog: function (newQuestion, oldQuestion) {
+    dialog() {
       this.getAllPhotosById()
     }
   },

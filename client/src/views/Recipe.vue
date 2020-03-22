@@ -20,7 +20,6 @@
           <v-img
             :src="recipeData.photo"
             class="black--text align-start"
-            max-width="600px"
             max-height="600px"
           >
           </v-img>

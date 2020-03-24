@@ -124,6 +124,7 @@
                   @dragover.prevent 
                   @dragend="dragEndSteps" 
                   @drop="dragFinishSteps(index, $event)"
+                  @dblclick="editStep(index)"
                 >
                 {{index+1}}. {{step}}
               </li>
@@ -359,7 +360,10 @@ export default {
       } else {
         this.steps.splice(to, 0, this.steps.splice(from, 1)[0]);
       }
-    }
+    },
+    editStep(index) {
+      this.currentStep = this.steps[index]
+    },
   },
   mounted() {
     this.getImgurSecret()

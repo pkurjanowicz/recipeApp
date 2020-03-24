@@ -21,6 +21,8 @@
             :src="recipeData.photo"
             class="black--text align-start"
             max-height="600px"
+            width="100%"
+            max-width="600px"
           >
           </v-img>
 
@@ -199,3 +201,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.v-card__text, .v-card__title {
+  word-break: normal;
+}
+</style>

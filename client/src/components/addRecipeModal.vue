@@ -322,7 +322,7 @@ export default {
       ev.dataTransfer.dropEffect = 'move'
       this.dragging = which;
     },
-    dragEndIngredients(ev) {
+    dragEndIngredients() {
       this.dragging = -1
     },
     dragFinishIngredients(to, ev) {
@@ -345,7 +345,7 @@ export default {
       ev.dataTransfer.dropEffect = 'move'
       this.dragging = which;
     },
-    dragEndSteps(ev) {
+    dragEndSteps() {
       this.dragging = -1
     },
     dragFinishSteps(to, ev) {

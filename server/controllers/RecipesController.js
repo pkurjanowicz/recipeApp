@@ -145,5 +145,40 @@ module.exports = {
     } catch (err) {
       console.log(err)
     }
+  },
+  async updateRecipe (req, res) {
+    try {
+      Recipes.update(
+        {
+          title: req.body.title,
+          cook_time: req.body.cook_time,
+          prep_time: req.body.prep_time,
+          type: req.body.type,
+          servings: req.body.servings,
+          description: req.body.description,
+          ingredients: req.body.ingredients,
+          steps: req.body.steps,
+          photo: req.body.photo,
+        },
+        {where: { id: req.body.id}}
+      )
+      res.status(200).send({
+        success: "Successfully Updated the recipe!"
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  },
+  async getLoggedInEmail (req, res) {
+    try {
+      const user = await Users.findOne({
+        where: { email: req.session.user }
+      })
+      res.status(200).send({
+        success: user
+      })
+    } catch (err) {
+      console.log(err)
+    }
   }
 }

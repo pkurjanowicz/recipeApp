@@ -10,6 +10,10 @@
                 <v-btn icon large color="primary" @click="likeRecipe(recipeData.id)">
                   <v-icon large>mdi-heart</v-icon>
                 </v-btn>
+                <editRecipeModal 
+                    :recipeId='recipeData.id'
+                    v-if='recipeData.writer == userEmail'
+                  />
               </v-card-title>
               <v-card-text >By {{recipeData.writer}}</v-card-text>              
               <v-card-text class="title">{{recipeData.description}}</v-card-text>
@@ -127,6 +131,7 @@ import RecipeService from '../services/RecipesService'
 import CommentService from '../services/CommentService'
 import addPhotoModal from '../components/addPhotoModal'
 import viewPhotosModal from '../components/viewPhotosModal'
+import editRecipeModal from '../components/editRecipeModal'
 import { serverBus } from '../main'
 import moment from 'moment'
 
@@ -134,7 +139,8 @@ export default {
   name: 'Profile',
   components: {
     addPhotoModal,
-    viewPhotosModal
+    viewPhotosModal,
+    editRecipeModal
   },
   data() {
     return {
@@ -142,6 +148,7 @@ export default {
       snackbarText: '',
       comments: [],
       comment: '',
+      userEmail: '',
     }
   },
   methods: {
@@ -194,10 +201,20 @@ export default {
     },
     convertDate(date) {
       return moment(date).format('MMM DD YYYY')
+    },
+    async getUserEmail() {
+      try {
+        const response = await RecipeService.getLoggedInEmail()
+        this.userEmail = response.data.success.email
+      } catch (err) {
+        console.log(err)
+      }
     }
   },
   mounted() {
     this.getSingleRecipe()
+    this.getUserEmail()
+    
   }
 }
 </script>

@@ -95,5 +95,17 @@ module.exports = {
     } catch (err) {
       console.log(err)
     }
+  },
+  async findUserInfo (req, res) {
+    try {
+      const user = await Users.findOne({
+        where: { email: req.session.user }
+      }) 
+      res.status(200).send({
+        data : user
+      })
+    } catch (err) {
+      console.log(err)
+    }
   }
 }

@@ -6,5 +6,8 @@ export default {
   },
   addUserToGroup (email) {
     return Api().post('addUserToGroup', email)
+  },
+  findUserInfo() {
+    return Api().get('findUserInfo')
   }
 }

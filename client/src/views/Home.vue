@@ -3,6 +3,12 @@
     <v-content>
       <v-container fluid>
 
+        <v-row cols="12" v-if="profileInfo.data.data.avatar === null || profileInfo.data.data.name === null">
+          <v-btn @click="goToProfile()" class='error'>
+            Please setup your profile
+          </v-btn>
+        </v-row>
+
         <v-row class="pb-4">
           <v-col cols="12" sm="12" md="4" lg="3">
             <v-select
@@ -64,6 +70,7 @@
 
 <script>
 import RecipeService from '../services/RecipesService'
+import SearchService from '../services/SearchService'
 import { homePageRefresh } from '../main'
 
 export default {
@@ -92,6 +99,7 @@ export default {
         'Dessert'
       ],
       filter: '',
+      profileInfo: '',
     }
   },
   methods: {
@@ -113,6 +121,16 @@ export default {
         })
       }
     },
+    async findUserInfo() {
+      try {
+        this.profileInfo = await SearchService.findUserInfo()
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    goToProfile() {
+      this.$router.push('/profile')
+    }
   },
   created() {
     homePageRefresh.$on('homePageRefresh', () => {
@@ -121,6 +139,7 @@ export default {
   },
   mounted() {
     this.getAllRecipes()
+    this.findUserInfo()
   },
   watch: {
     'filter'() {

@@ -384,7 +384,7 @@ export default {
           this.steps = ''
           this.image = ''
           this.dialog = false
-          this.snackbarText = "Successfully Submitted Recipe"
+          this.snackbarText = "Successfully Updated Recipe"
           serverBus.$emit('snackBar', this.snackbarText)
           homePageRefresh.$emit('homePageRefresh')
         })

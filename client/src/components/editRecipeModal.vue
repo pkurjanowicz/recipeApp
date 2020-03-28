@@ -145,7 +145,6 @@
               :success-messages='success'
               :loading='loading'
             />
-            <p>{{this.file}}</p>
 
             <v-btn 
               text 
@@ -375,7 +374,6 @@ export default {
           steps: this.steps,
           photo: this.image,
         }).then(response => {
-          console.log(response)
           this.title = ''
           this.cookTime = ''
           this.prepTime =''
@@ -386,7 +384,7 @@ export default {
           this.steps = ''
           this.image = ''
           this.dialog = false
-          this.snackbarText = "Successfully Submitted Recipe"
+          this.snackbarText = "Successfully Updated Recipe"
           serverBus.$emit('snackBar', this.snackbarText)
           homePageRefresh.$emit('homePageRefresh')
         })

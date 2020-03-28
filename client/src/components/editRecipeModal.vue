@@ -373,7 +373,7 @@ export default {
           ingredients: this.ingredients,
           steps: this.steps,
           photo: this.image,
-        }).then(response => {
+        }).then(() => {
           this.title = ''
           this.cookTime = ''
           this.prepTime =''

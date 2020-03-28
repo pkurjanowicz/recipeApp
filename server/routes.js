@@ -33,4 +33,5 @@ module.exports = (app) => {
   app.post('/getAllPhotosById', addAdditionalPhotoController.getAllPhotosById)
   app.post('/updateRecipe', RecipesController.updateRecipe)
   app.get('/getLoggedInEmail', RecipesController.getLoggedInEmail)
+  app.get('/findUserInfo', ProfileController.findUserInfo)
 }

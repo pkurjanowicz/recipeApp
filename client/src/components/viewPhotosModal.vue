@@ -58,3 +58,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.v-card__text, .v-card__title {
+  word-break: normal;
+}
+</style>

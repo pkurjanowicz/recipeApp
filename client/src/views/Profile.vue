@@ -242,6 +242,11 @@ export default {
 .v-card__title {
   cursor:pointer;
 }
+
+.v-card__text, .v-card__title {
+  word-break: normal;
+}
+
 </style>
 
 

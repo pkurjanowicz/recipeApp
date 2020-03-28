@@ -35,10 +35,10 @@
         <v-icon>mdi-magnify</v-icon>
       </v-btn> -->
 
-      <!-- <v-btn icon color="primary" @click="goToLikedPage()">
+      <v-btn icon color="primary" @click="goToLikedPage()">
         <v-icon>mdi-heart</v-icon>
-      </v-btn> -->
-      <!-- <v-menu bottom left >
+      </v-btn>
+      <v-menu bottom left >
         <template v-slot:activator="{ on }">
           <v-btn
             color="primary"
@@ -49,23 +49,23 @@
           </v-btn>
         </template>
         <v-list>
-          <v-list-item
+          <!-- <v-list-item
             v-for="(item, i) in dotMenu"
             :key="i"
             :to='item.route'
           >
             <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item>
+          </v-list-item> -->
           <v-list-item text mandatory color="primary" @click='logout'>
           <v-list-item-title>Sign Out</v-list-item-title>
           </v-list-item>
         </v-list>
-      </v-menu> -->
+      </v-menu>
       
     </v-app-bar>
 
-    <v-navigation-drawer app v-model='drawer' temporary v-if="drawer === true">
-      <v-row  class="mt-5" >
+    <v-navigation-drawer app v-model='drawer' temporary v-if="drawer === true" >
+      <v-row  class="mt-5">
         <v-col align="center">
             <v-avatar size="100">
               <img :src="profileData.avatar">
@@ -86,25 +86,25 @@
                 <v-list-item-title v-text="item.text" ></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <v-list-item text mandatory color="primary" @click="goToLikedPage()">
+            <!-- <v-list-item text mandatory color="primary" @click="goToLikedPage()">
               <v-list-item-icon>
                 <v-icon>mdi-heart</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
                 <v-list-item-title>Liked</v-list-item-title>
               </v-list-item-content>
-            </v-list-item>
-            <v-list-item text mandatory color="primary" @click='logout'>
+            </v-list-item> -->
+            <!-- <v-list-item text mandatory color="primary" @click='logout'>
               <v-list-item-icon>
                 <v-icon>mdi-exit-to-app</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
                 <v-list-item-title>Sign Out</v-list-item-title>
               </v-list-item-content>
-            </v-list-item>
+            </v-list-item> -->
           </v-list-item-group>
       </v-list>
-    </v-navigation-drawer>
+    </v-navigation-drawer>      
 
   </nav>
 </template>

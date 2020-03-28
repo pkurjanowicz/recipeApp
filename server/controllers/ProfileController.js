@@ -98,12 +98,18 @@ module.exports = {
   },
   async findUserInfo (req, res) {
     try {
-      const user = await Users.findOne({
-        where: { email: req.session.user }
-      }) 
-      res.status(200).send({
-        data : user
+      if (req.session.user === "Guest") {
+        res.status(200).send({
+          data : 'data: {data: {avatar: "Guest", name: "Guest"}}'
+        })
+      } else {
+        const user = await Users.findOne({
+          where: { email: req.session.user }
+        }) 
+        res.status(200).send({
+          data : user
       })
+    }
     } catch (err) {
       console.log(err)
     }

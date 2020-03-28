@@ -8,8 +8,6 @@
       flat 
       app 
       class="grey lighten-4"
-      shrink-on-scroll
-      prominent
       src="../assets/med-food-hero.jpg"
       max-width="100%"
     >

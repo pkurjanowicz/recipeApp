@@ -115,7 +115,12 @@
               <v-card-title class="display-1">Recipes</v-card-title>
             </v-card>
             <v-card @click="goToRecipePage(recipe.id)" outlined v-for="recipe in recipes" :key="recipe.id" class="ma-2">
-                <v-card-title class="subtitle-1">{{ recipe.title }}</v-card-title>
+                <v-card-title class="subtitle-1">
+                  <editRecipeModal 
+                    :recipeId='recipe.id'
+                  />
+                  {{ recipe.title }}
+                </v-card-title>
             </v-card>
             <v-card v-if="recipes == ''" class="ma-2" flat>
                 <v-card-title class="subtitle-1">Please Add in Recipes</v-card-title>
@@ -134,11 +139,13 @@
 import axios from 'axios'
 import ImgurService from '../services/ImgurService'
 import RecipeService from '../services/RecipesService'
+import editRecipeModal from '../components/editRecipeModal'
 
 
 export default {
   name: 'Profile',
   components: {
+    editRecipeModal
   },
   data() {
     return {

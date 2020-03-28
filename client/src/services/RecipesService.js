@@ -21,5 +21,11 @@ export default {
   },
   getFriendRecipes(id) {
     return Api().post('getFriendRecipes', id)
+  },
+  updateRecipe(data) {
+    return Api().post('updateRecipe', data)
+  },
+  getLoggedInEmail() {
+    return Api().get('getLoggedInEmail')
   }
 }

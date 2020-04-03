@@ -27,5 +27,8 @@ export default {
   },
   getLoggedInEmail() {
     return Api().get('getLoggedInEmail')
+  },
+  unlikeRecipe(id) {
+    return Api().post('unlikeRecipe', id)
   }
 }

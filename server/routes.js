@@ -34,4 +34,5 @@ module.exports = (app) => {
   app.post('/updateRecipe', RecipesController.updateRecipe)
   app.get('/getLoggedInEmail', RecipesController.getLoggedInEmail)
   app.get('/findUserInfo', ProfileController.findUserInfo)
+  app.post('/unlikeRecipe', RecipesController.unlikeRecipe)
 }

@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-content>
-      <v-container>
+      <v-container fluid>
 
         <v-row cols="12" v-if="profileInfo.data.data.avatar === null || profileInfo.data.data.name === null">
           <v-btn @click="goToProfile()" class='error'>

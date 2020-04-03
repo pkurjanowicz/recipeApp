@@ -180,5 +180,52 @@ module.exports = {
     } catch (err) {
       console.log(err)
     }
-  }
+  },
+  async unlikeRecipe (req,res) {
+    try {
+      const user = await Users.findOne({
+        where: { email: req.session.user }
+      })
+      console.log("______________________________________")
+      console.log(user.liked_recipes.length)
+      console.log("______________________________________")
+      if (req.session.user === "Guest") {
+        res.status(200).send({
+          response: "You Need to Login to Like a Recipe"
+        })
+      } else if (user.liked_recipes.indexOf(req.body.id) == 0 && user.liked_recipes.length == 1) {
+        Users.update(
+          {liked_recipes: null},
+          {where: {email: req.session.user }}
+        )
+        res.status(200).send({
+          response: "Successfully unliked recipe"
+        })
+      } else if (user.liked_recipes.indexOf(req.body.id) == 0) {
+        Users.update(
+          {liked_recipes: user.liked_recipes.replace(req.body.id + ',', '')},
+          {where: {email: req.session.user }}
+        )
+        res.status(200).send({
+          response: "Successfully unliked recipe"
+        })
+      } else if (user.liked_recipes.includes(req.body.id)) {
+        Users.update(
+          {liked_recipes: user.liked_recipes.replace(',' + req.body.id, '')},
+          {where: {email: req.session.user }}
+        )
+        res.status(200).send({
+          response: "Successfully unliked recipe"
+        })
+      } else {
+        res.status(200).send({
+          response: "You don't like the recipe already"
+        })
+      }
+    } catch (err) {
+      res.status(200).send({
+        response: 'Unable to like recipe'
+      })
+    }
+  },
 }

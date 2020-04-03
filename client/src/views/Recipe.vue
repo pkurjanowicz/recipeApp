@@ -7,8 +7,11 @@
           <v-col cols="12">
               <v-card-title class="text-capitalize mb-1 display-2">
                 {{recipeData.title}}
-                <v-btn icon large color="primary" @click="likeRecipe(recipeData.id)">
+                <v-btn v-if="likedRecipe" icon large color="primary" @click="unlikeRecipe(recipeData.id)">
                   <v-icon large>mdi-heart</v-icon>
+                </v-btn>
+                <v-btn v-else icon large color="primary" @click="likeRecipe(recipeData.id)">
+                  <v-icon large>mdi-heart-outline</v-icon>
                 </v-btn>
                 <editRecipeModal 
                     :recipeId='recipeData.id'
@@ -149,6 +152,8 @@ export default {
       comments: [],
       comment: '',
       userEmail: '',
+      recipes: [],
+      likedRecipe: false,
     }
   },
   methods: {
@@ -171,6 +176,7 @@ export default {
         })
         this.snackbarText = response.data.response
         serverBus.$emit('snackBar', this.snackbarText)
+        this.likedRecipe = true
       } catch (err) {
         console.log(err)
       }
@@ -209,12 +215,36 @@ export default {
       } catch (err) {
         console.log(err)
       }
-    }
+    },
+    async getLikedRecipes() {
+      try {
+        let response = await RecipeService.getLikedRecipes()
+        response = response.data.success
+        for (let i = 0; i < response.length; i++) {
+          this.recipes.push(response[i].id)
+        }
+        this.likedRecipe = this.recipes.includes(this.recipeData.id)
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    async unlikeRecipe(id) {
+      try {
+        const response = await RecipeService.unlikeRecipe({
+          id: id
+        })
+        this.snackbarText = response.data.response
+        serverBus.$emit('snackBar', this.snackbarText)
+        this.likedRecipe = false
+      } catch (err) {
+        console.log(err)
+      }
+    },
   },
   mounted() {
     this.getSingleRecipe()
     this.getUserEmail()
-    
+    this.getLikedRecipes()
   }
 }
 </script>

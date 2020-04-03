@@ -3,7 +3,7 @@
     <v-content>
       <v-container fluid>
 
-        <v-row cols="12" v-if="profileInfo.data.data.avatar === null || profileInfo.data.data.name === null">
+        <v-row cols="12" v-if="profileInfo.avatar === null || profileInfo.name === null">
           <v-btn @click="goToProfile()" class='error'>
             Please setup your profile
           </v-btn>
@@ -99,7 +99,9 @@ export default {
         'Dessert'
       ],
       filter: '',
-      profileInfo: '',
+      profileInfo: [
+        {avatar: null, name: null}
+      ],
     }
   },
   methods: {
@@ -123,7 +125,10 @@ export default {
     },
     async findUserInfo() {
       try {
-        this.profileInfo = await SearchService.findUserInfo()
+        await SearchService.findUserInfo().then(resp => {
+          this.profileInfo.avatar = resp.data.data.avatar
+          this.profileInfo.name = resp.data.data.name
+        })
       } catch (err) {
         console.log(err)
       }

@@ -1,14 +1,15 @@
 <template>
-  <v-dialog max-width="600px" v-model="dialog">
+  <v-dialog max-width="600px" v-model="dialog" persistent>
     <template v-slot:activator="{ on }">
       <v-btn text v-on="on">
         <v-icon>mdi-square-edit-outline</v-icon>
       </v-btn>
     </template>
-      <v-card class="ma-1">
-        <v-card-title >
-          <h2 class="font-weight-light mb-6">Edit Recipe</h2>
-        </v-card-title>
+      <v-card>
+        <v-card class="pa-2" flat>
+          <h2 class="font-weight-light mb-6 ml-5">Edit Recipe <v-btn icon class="float-right mr-4" @click="closeDialog()"><v-icon medium>mdi-close</v-icon></v-btn></h2>
+        </v-card>
+          
         <v-card-text>
           <v-form 
             ref="form"
@@ -391,6 +392,9 @@ export default {
       } catch (err) {
         console.log(err)
       }
+    },
+    closeDialog() {
+      this.dialog = false
     }
   },
   watch: {

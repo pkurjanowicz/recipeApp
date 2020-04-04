@@ -245,6 +245,7 @@ export default {
     this.getSingleRecipe()
     this.getUserEmail()
     this.getLikedRecipes()
+    window.scrollTo(0, 0)
   }
 }
 </script>
@@ -253,4 +254,5 @@ export default {
 .v-card__text, .v-card__title {
   word-break: normal;
 }
+
 </style>

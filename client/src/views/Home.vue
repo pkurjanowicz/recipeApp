@@ -145,6 +145,7 @@ export default {
   mounted() {
     this.getAllRecipes()
     this.findUserInfo()
+    window.scrollTo(0, 0)
   },
   watch: {
     'filter'() {

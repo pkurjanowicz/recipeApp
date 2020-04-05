@@ -14,7 +14,7 @@
     <template v-slot:img="{ props }">
       <v-img
         v-bind="props"
-        gradient="to bottom right, rgba(193, 66, 66, 0.9), rgba(25,32,72,0.8)"
+        gradient="to bottom right, rgb(242,161,188, 0.9), rgba(25,32,72,0.8)"
       ></v-img>
     </template>
     <v-app-bar-nav-icon 
@@ -23,7 +23,7 @@
       x-large 
       dark
     />
-    <template>
+    <!-- <template>
         <v-img
           src="../assets/logo_white.png"
           contain
@@ -32,7 +32,7 @@
           @click="goToHomePage()"
           style="cursor: pointer;"
         />
-    </template>
+    </template> -->
 
     
       <!-- <v-toolbar-title class="text-uppercase bold font-weight-black display-1">

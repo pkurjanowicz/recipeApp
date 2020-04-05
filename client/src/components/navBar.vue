@@ -23,6 +23,17 @@
       x-large 
       dark
     />
+    <template>
+        <v-img
+          src="../assets/logo_white.png"
+          contain
+          class="mx-2"
+          max-width="200"
+          @click="goToHomePage()"
+          style="cursor: pointer;"
+        />
+    </template>
+
     
       <!-- <v-toolbar-title class="text-uppercase bold font-weight-black display-1">
         <span class="font-weight-light white--text">Recipe</span>
@@ -160,6 +171,9 @@ export default {
     },
     goToLikedPage() {
       this.$router.push("/liked")
+    },
+    goToHomePage() {
+      this.$router.push("/")
     }
   },
   created() {

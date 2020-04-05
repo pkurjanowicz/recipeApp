@@ -2,6 +2,15 @@
   <v-app>
     <v-content>
       <v-container fluid>
+        <v-row 
+          cols="12"
+          class="d-flex justify-center"
+        >
+          <v-img
+            src="../assets/logo_transparent.png"
+            max-width="250"
+          />
+        </v-row>
 
         <v-row cols="12" v-if="profileInfo.avatar === null || profileInfo.name === null">
           <v-btn @click="goToProfile()" class='error'>
@@ -163,4 +172,5 @@ export default {
 .v-card__text, .v-card__title {
   word-break: normal;
 }
+
 </style>

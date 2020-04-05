@@ -53,6 +53,9 @@ export default {
 </script>
 
 <style scoped>
-  body {margin: 0}
+.theme--light.v-application {
+  background: #fcfbf5;
+}
+
 </style>
 

@@ -25,7 +25,7 @@
               <template v-slot:img="{ props }">
                 <v-img
                   v-bind="props"
-                  gradient="to bottom right, rgba(193, 66, 66, 0.9), rgba(25,32,72,0.8)"
+                  gradient="to bottom right, rgb(242,161,188, 0.9), rgba(25,32,72,0.8)"
                 ></v-img>
               </template>
                 <v-toolbar-title>Login</v-toolbar-title>

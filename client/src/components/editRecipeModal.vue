@@ -112,8 +112,8 @@
               required
               @click:append-outer="addStep(currentStep)"
               append-outer-icon='mdi-plus'
-              :counter="300"
-              :rules="[() => currentStep.length <= 300 || 'Step must be less than 30 characters']"
+              :counter="250"
+              :rules="[() => currentStep.length <= 250 || 'Step must be less than 250 characters']"
             />
             <span class="ma-0 overline">* Double click to edit step</span><br>
             <span class="ma-0 overline">* Click and drag to change order</span><br>

@@ -111,7 +111,7 @@ export default {
   methods: {
     async submitLogin() {
       try {
-          await AuthenicationService.login({
+          let user = await AuthenicationService.login({
           email : this.email,
           password : this.password
         })

@@ -15,6 +15,7 @@ async function findData(id) {
 module.exports = { 
   async addRecipe(req, res) {
     try {
+      console.log(req.session.user)
       const user = await Users.findOne({
         where: { email: req.session.user }
       })

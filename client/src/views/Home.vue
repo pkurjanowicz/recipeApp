@@ -28,6 +28,26 @@
               persistent-hint
             ></v-select>
           </v-col>
+          <v-col cols="12" sm="12" md="4" lg="3">
+            <v-autocomplete
+        v-model="search"
+        :items="items"
+        :loading="isLoading"
+        :search-input.sync="search"
+        color="white"
+        hide-no-data
+        hide-selected
+        item-text="Description"
+        item-value="API"
+        label="Search Recipe"
+        placeholder="Start typing to Search"
+        prepend-icon="mdi-magnify"
+        return-object
+      ></v-autocomplete>
+          </v-col>
+        </v-row>
+        <v-row class="pb-4">
+          <p>{{ search }}</p>
         </v-row>
 
         <v-row dense v-if="!filteredRecipes">
@@ -89,6 +109,7 @@ export default {
   data() {
     return {
       recipes: [],
+      search: null,
       filteredRecipes: '',
       types: [
         'No Filter',

@@ -25,7 +25,7 @@ app.use(session({
   secret:'!.Pz-@h_frMpt9v',
   saveUninitialized:false,
   resave:false,
-  store:new FileStore({logFn: function(){}})
+  store:new FileStore()
 }))
 
 app.use('/', indexRouter);

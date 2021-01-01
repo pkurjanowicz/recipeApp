@@ -31,6 +31,17 @@ app.use(session({
 app.use('/', indexRouter);
 require('./routes')(app)
 
+app.get('/destroy', function (req, res) {
+  req.session.destroy(function(err) {
+    if (err) {
+      console.error(err);
+    } else {
+      res.clearCookie('session-id');
+      res.redirect('/');
+    }
+  });
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

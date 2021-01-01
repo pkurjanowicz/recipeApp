@@ -28,6 +28,22 @@
               persistent-hint
             ></v-select>
           </v-col>
+          <v-col cols="12" sm="12" md="4" lg="3">
+            <v-autocomplete
+              v-model="select"
+              :loading="loading"
+              :items="items"
+              :search-input.sync="search"
+              cache-items
+              flat
+              clearable
+              label="Select Recipe"
+              return-object
+            ></v-autocomplete>
+          </v-col>
+        </v-row>
+        <v-row class="pb-4">
+          
         </v-row>
 
         <v-row dense v-if="!filteredRecipes">
@@ -111,6 +127,11 @@ export default {
       profileInfo: [
         {avatar: null, name: null}
       ],
+      loading: false,
+        items: [],
+        search: null,
+        select: null,
+        searchfilter: [],
     }
   },
   methods: {
@@ -118,6 +139,7 @@ export default {
       try { 
         const response = await RecipeService.getAllRecipes()
         this.recipes = response.data.success
+        console.log(this.recipes)
       } catch (err) {
         console.log(err)
       }
@@ -129,6 +151,13 @@ export default {
       if (this.filter !== '') {
         this.filteredRecipes = this.recipes.filter((recipe) => {
           return (recipe.type == this.filter)
+        })
+      }
+    },
+    sortBySearch() {
+      if (this.select !== null) {
+        this.filteredRecipes = this.recipes.filter((recipe) => {
+          return (recipe.title == this.select)
         })
       }
     },
@@ -144,7 +173,18 @@ export default {
     },
     goToProfile() {
       this.$router.push('/profile')
-    }
+    },
+    querySelections (v) {
+        this.loading = true
+        // Simulated ajax query
+        setTimeout(() => {
+          this.recipes.forEach(recipe => this.searchfilter.push(recipe.title))
+          this.items = this.searchfilter.filter(e => {
+            return (e || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
+          })
+          this.loading = false
+        }, 500)
+      },
   },
   created() {
     homePageRefresh.$on('homePageRefresh', () => {
@@ -163,7 +203,17 @@ export default {
       } else if (this.filter !== '' || this.filter !== 'No Filter') {
         this.sortBy()
       }
-    }
+    },
+    'select'() {
+      if ( this.select === null){
+        this.filteredRecipes = ''
+      } else if (this.select !== null) {
+        this.sortBySearch()
+      }
+    },
+    search (val) {
+        val && val !== this.select && this.querySelections(val)
+      },
   },
 }
 </script>

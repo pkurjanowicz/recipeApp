@@ -1,7 +1,9 @@
 <template>
   <v-app>
     <v-content>
-      <v-container fluid>
+      <v-container 
+        fluid
+      >
           <v-parallax
             dark
             src="../assets/vegetables.jpg"
@@ -70,27 +72,40 @@
             ></v-autocomplete>
           </v-col>
         </v-row>
-        <v-row class="pb-4">
-          
-        </v-row>
 
-        <v-row dense v-if="!filteredRecipes">
+        <v-row 
+          v-if="!filteredRecipes"
+          justify="center"
+        >
           <v-col
             v-for="(recipe, index) in recipes"
-            :key="index"
+            :key="index"           
           >
-            <v-card width="400px" height='300px' @click="goToRecipePage(recipe.id)">
+            <v-card 
+              width="400px" 
+              height='400px' 
+              @click="goToRecipePage(recipe.id)"
+            >
               <v-img
                 :src="recipe.photo"
-                class="white--text align-end"
-                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                 height="200px"
-                
-              >
-                <v-card-title v-text="recipe.title"></v-card-title>
-              </v-img>
-
-              <v-card-text v-text="recipe.description"></v-card-text>
+              />
+              <div 
+                align="center"
+                v-text="recipe.type"
+                class="text-subtitle-2 grey--text pt-3 text-uppercase"
+              />
+              <div 
+                align="center"
+                v-text="recipe.title"
+                class="text-h5 text--black pa-3 pb-5"
+              />
+              <hr style="width:60px; margin: auto;"/>              
+              <div
+                align="center"
+                v-text="convertDate(recipe.updatedAt)"
+                class="text-subtitle-2 primary--text pt-3 text-uppercase"                
+              />
             </v-card>
           </v-col>
         </v-row>
@@ -100,18 +115,27 @@
             v-for="(recipe, index) in filteredRecipes"
             :key="index"
           >
-            <v-card width="400px" height='300px' @click="goToRecipePage(recipe.id)">
+            <v-card width="400px" height='400px' @click="goToRecipePage(recipe.id)">
               <v-img
                 :src="recipe.photo"
-                class="white--text align-end"
-                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                 height="200px"
-                
-              >
-                <v-card-title v-text="recipe.title"></v-card-title>
-              </v-img>
-
-              <v-card-text v-text="recipe.description"></v-card-text>
+              />
+              <div 
+                align="center"
+                v-text="recipe.type"
+                class="text-subtitle-2 grey--text pt-3 text-uppercase"
+              />
+              <div 
+                align="center"
+                v-text="recipe.title"
+                class="text-h5 text--black pa-3 pb-5"
+              />
+              <hr style="width:60px; margin: auto;"/>              
+              <div
+                align="center"
+                v-text="convertDate(recipe.updatedAt)"
+                class="text-subtitle-2 primary--text pt-3 text-uppercase"                
+              />
             </v-card>
           </v-col>
         </v-row>
@@ -213,6 +237,10 @@ export default {
           this.loading = false
         }, 500)
       },
+    convertDate(date) {
+      var date = new Date(date);
+      return date.toLocaleDateString()
+    }
   },
   created() {
     homePageRefresh.$on('homePageRefresh', () => {
@@ -250,8 +278,6 @@ export default {
 .v-card__text, .v-card__title {
   word-break: normal;
 }
-.theme--light.v-text-field--filled>.v-input__control>.v-input__slot {
-    background: rgba(0,0,0,.6);
-}
+
 
 </style>

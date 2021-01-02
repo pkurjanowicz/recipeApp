@@ -2,7 +2,6 @@
   <v-app>
     <v-content>
       <v-container>
-
         <v-row>
           <v-col cols="12">
               <v-card-title class="text-capitalize mb-1 display-2">
@@ -23,17 +22,10 @@
           </v-col>
         </v-row>
 
-        <v-row justify="start">
-          <v-img
-            :src="recipeData.photo"
-            class="black--text align-start"
-            max-height="600px"
-            width="100%"
-            max-width="600px"
-          >
-          </v-img>
-
-          <v-col cols="lg-2 md-4" style="min-width: 200px">
+        <v-row>
+          <v-col 
+            style="max-width: 200px;"
+            >
             <v-card raised>
               <v-card-text>
                 <b>Prep Time</b> : {{recipeData.prep_time}}
@@ -47,10 +39,25 @@
             </v-card>
           </v-col>
         </v-row>
+        <v-row>
+          <v-col>
+          <v-img
+            :src="recipeData.photo"
+            class="black--text"
+            max-height="600px"
+            max-width="600px"
+          >
+          </v-img>     
+          </v-col>     
+        </v-row>
 
         <v-row>
           <v-col>
-            <v-card flat>
+            <v-card 
+            flat
+            class="pt-2 pb-2"
+            style="background: #fcfbf5;"
+            >
               <span class="mr-2">
                 <viewPhotosModal/>
               </span>

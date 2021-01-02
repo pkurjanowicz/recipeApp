@@ -2,15 +2,43 @@
   <v-app>
     <v-content>
       <v-container fluid>
-        <v-row 
-          cols="12"
-          class="d-flex justify-center"
-        >
-          <v-img
-            src="../assets/logo_transparent.png"
-            max-width="250"
-          />
-        </v-row>
+          <v-parallax
+            dark
+            src="../assets/vegetables.jpg"
+            v-if="select == null"
+          >
+            <v-overlay 
+            value="true" 
+            absolute
+            :opacity=".6"
+            >
+              <v-row
+                align="center"
+                justify="center"
+              >
+                <v-col
+                  class="text-h3 mb-3 black--text font-weight-bold text-center"
+                  style="font-size:100px"
+                >
+                  <v-autocomplete
+                    v-model="select"
+                    :loading="loading"
+                    :items="items"
+                    :search-input.sync="search"
+                    cache-items
+                    flat
+                    clearable
+                    hide-no-data
+                    label="Search a Recipe"
+                    prepend-icon="mdi-magnify"
+                    return-object
+                    filled
+                    rounded
+                  ></v-autocomplete>
+                </v-col>
+              </v-row>
+            </v-overlay>
+          </v-parallax>
 
         <v-row cols="12" v-if="profileInfo.avatar === null || profileInfo.name === null">
           <v-btn @click="goToProfile()" class='error'>
@@ -19,7 +47,7 @@
         </v-row>
 
         <v-row class="pb-4">
-          <v-col cols="12" sm="12" md="4" lg="3">
+          <v-col cols="12" sm="12" md="4" lg="3" v-if="select == null">
             <v-select
               v-model="filter"
               :items="types"
@@ -28,7 +56,7 @@
               persistent-hint
             ></v-select>
           </v-col>
-          <v-col cols="12" sm="12" md="4" lg="3">
+          <v-col cols="12" sm="12" md="4" lg="3" v-if="select !== null">
             <v-autocomplete
               v-model="select"
               :loading="loading"
@@ -221,6 +249,9 @@ export default {
 <style scoped>
 .v-card__text, .v-card__title {
   word-break: normal;
+}
+.theme--light.v-text-field--filled>.v-input__control>.v-input__slot {
+    background: rgba(0,0,0,.6);
 }
 
 </style>

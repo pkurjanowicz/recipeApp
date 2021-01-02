@@ -8,43 +8,30 @@
       flat 
       app 
       class="grey lighten-4"
-      src="../assets/med-food-hero.jpg"
       max-width="100%"
+      color="white"
     >
-    <template v-slot:img="{ props }">
-      <v-img
-        v-bind="props"
-        gradient="to bottom right, rgb(242,161,188, 0.9), rgba(25,32,72,0.8)"
-      ></v-img>
-    </template>
+
     <v-app-bar-nav-icon 
       @click.stop="drawer = !drawer" 
-      text color="white"
+      text color="black"
       x-large 
       dark
     />
-    <!-- <template>
-        <v-img
-          src="../assets/logo_white.png"
-          contain
-          class="mx-2"
-          max-width="200"
-          @click="goToHomePage()"
-          style="cursor: pointer;"
-        />
-    </template> -->
 
     
-      <!-- <v-toolbar-title class="text-uppercase bold font-weight-black display-1">
-        <span class="font-weight-light white--text">Recipe</span>
-        <span class='white--text'>Tracker</span>
-      </v-toolbar-title> -->
-      <v-spacer></v-spacer>
-      <v-spacer></v-spacer>
+      <v-toolbar-title 
+        class="text-uppercase bold font-weight-black text-h5 flex text-center"
+        >
+        <router-link 
+          to="/"
+          style="text-decoration: none; color: inherit;"
+        >
+        <span class="primary--text">Healthfood</span>
+        <span class='font-weight-light primary--text '>Sponsors</span>
+        </router-link>
+      </v-toolbar-title>
 
-      <!-- <v-btn icon color="primary">
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn> -->
 
       <v-btn icon color="primary" @click="goToLikedPage()">
         <v-icon>mdi-heart</v-icon>
@@ -137,8 +124,8 @@ export default {
     return {
       drawer: false,
       drawerItems: [
-        { text: 'Dashboard', icon: 'mdi-view-dashboard', route: '/' },
-        { text: 'Group', icon: 'mdi-account-group', route: '/group' },
+        { text: 'Home', icon: 'mdi-home', route: '/' },
+        { text: 'Friends', icon: 'mdi-account-group', route: '/group' },
         { text: 'Profile', icon: 'mdi-account', route: '/profile' },
       ],
       dotMenu: [

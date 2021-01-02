@@ -25,7 +25,7 @@ app.use(session({
   secret:'!.Pz-@h_frMpt9v',
   saveUninitialized:false,
   resave:false,
-  store:new FileStore({path : './sessions/'})
+  store:new FileStore({path : 'server/sessions'})
 }))
 
 app.use('/', indexRouter);

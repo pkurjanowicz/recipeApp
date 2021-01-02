@@ -17,18 +17,15 @@
           >
             <v-card class="elevation-12">
               <v-toolbar
-                color="primary"
+                color="white"
                 dark
                 flat
-                src='../assets/med-food-hero.jpg'
               >
-              <template v-slot:img="{ props }">
-                <v-img
-                  v-bind="props"
-                  gradient="to bottom right, rgb(242,161,188, 0.9), rgba(25,32,72,0.8)"
-                ></v-img>
-              </template>
-                <v-toolbar-title>Login</v-toolbar-title>
+                <v-toolbar-title
+                  class="text-uppercase bold font-weight-black text-h5"
+                >
+                  <span class='font-weight-light primary--text '>Login</span>
+                </v-toolbar-title>
                 <v-spacer />
               </v-toolbar>
               <v-card-text>

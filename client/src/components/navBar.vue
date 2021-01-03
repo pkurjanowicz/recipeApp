@@ -27,8 +27,18 @@
           to="/"
           style="text-decoration: none; color: inherit;"
         >
-        <span class="primary--text">Healthfood</span>
-        <span class='font-weight-light primary--text '>Sponsors</span>
+        <span 
+          class="primary--text"
+          :style="$vuetify.breakpoint.width < 460 ? 'display:none;' : ''"
+        >Healthfood</span>
+        <span 
+          class='font-weight-light primary--text '
+          :style="$vuetify.breakpoint.width < 460 ? 'display:none;' : ''"
+        >Sponsors</span>
+        <span 
+          class="primary--text"
+          :style="$vuetify.breakpoint.width > 460 ? 'display:none;' : ''"
+        >HFS</span>
         </router-link>
       </v-toolbar-title>
 

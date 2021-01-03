@@ -19,8 +19,9 @@
                 justify="center"
               >
                 <v-col
-                  class="text-h3 mb-3 black--text font-weight-bold text-center"
-                  style="font-size:100px"
+                  class="font-weight-bold text-center"
+                  style="font-size:100px;"
+                  cols="12"
                 >
                   <v-autocomplete
                     v-model="select"
@@ -32,9 +33,9 @@
                     clearable
                     hide-no-data
                     label="Search a Recipe"
-                    prepend-icon="mdi-magnify"
+                    append-icon="mdi-magnify"
                     return-object
-                    filled
+                    outlined
                     rounded
                   ></v-autocomplete>
                 </v-col>
@@ -76,6 +77,7 @@
         <v-row 
           v-if="!filteredRecipes"
           justify="center"
+          :style="$vuetify.breakpoint.width < 875 && $vuetify.breakpoint.width > 460 ? 'display:none;' : ''"
         >
           <v-col
             v-for="(recipe, index) in recipes"
@@ -110,12 +112,66 @@
           </v-col>
         </v-row>
 
+        <v-card 
+          @click="goToRecipePage(recipe.id)" 
+          v-for="recipe in recipes" 
+          :key="recipe.id"
+          :style="$vuetify.breakpoint.width > 875 || $vuetify.breakpoint.width < 460 ? 'display:none;' : ''"
+        >
+          <v-row dense justify="start" class="pa-5"  >
+
+            <v-col cols="auto">
+              <v-card max-width="200px" min-width='200px' flat>
+                <v-img
+                  :src="recipe.photo"
+                  class="black--text align-start"
+                  height="200px"
+                  width="200px"
+                >
+                </v-img>
+              </v-card>
+            </v-col>
+
+            <v-col align-self="start">
+              <v-card height="200px" class="black--text align-start" flat>
+                <div 
+                  align="left"
+                  v-text="recipe.type"
+                  class="text-subtitle-2 grey--text pt-2 pl-3 text-uppercase"
+                >
+                </div>
+                <div 
+                  align="left"
+                  v-text="recipe.title"
+                  class="text-h5 text--black pt-2 pl-3"
+                />
+                <div 
+                  align="left"
+                  v-text="recipe.description"
+                  class="text-subtitle-2 grey--text pt-2 pl-3 pb-5"
+                  :style="$vuetify.breakpoint.width < 650 ? 'display:none;' : ''"
+                />           
+                <div
+                  align="left"
+                  v-text="convertDate(recipe.updatedAt)"
+                  class="text-subtitle-2 primary--text pt-2 pl-3 text-uppercase"                
+                />
+              </v-card>
+            </v-col>
+
+          </v-row>
+        </v-card>
+
         <v-row dense v-if="filteredRecipes">
           <v-col
             v-for="(recipe, index) in filteredRecipes"
             :key="index"
           >
-            <v-card width="400px" height='400px' @click="goToRecipePage(recipe.id)">
+            <v-card 
+              width="400px" 
+              height='400px' 
+              @click="goToRecipePage(recipe.id)"
+            >
               <v-img
                 :src="recipe.photo"
                 height="200px"
@@ -191,7 +247,6 @@ export default {
       try { 
         const response = await RecipeService.getAllRecipes()
         this.recipes = response.data.success
-        console.log(this.recipes)
       } catch (err) {
         console.log(err)
       }

@@ -7,7 +7,8 @@
           <v-parallax
             dark
             src="../assets/vegetables.jpg"
-            v-if="select == null"
+            v-if="select === null" 
+            :style="$vuetify.breakpoint.width < 460 ? 'display:none;' : ''"          
           >
             <v-overlay 
             value="true" 
@@ -24,6 +25,7 @@
                   cols="12"
                 >
                   <v-autocomplete
+                    v-if="$vuetify.breakpoint.width > 460"
                     v-model="select"
                     :loading="loading"
                     :items="items"
@@ -50,6 +52,25 @@
         </v-row>
 
         <v-row class="pb-4">
+          <v-col 
+          cols="12" sm="12" md="4" lg="3" 
+          v-if="select !== null || $vuetify.breakpoint.width < 460"
+          >
+            <v-autocomplete
+              v-model="select"
+              :loading="loading"
+              :items="items"
+              :search-input.sync="search"
+              cache-items
+              flat
+              clearable
+              label="Search a Recipe"
+              return-object
+              append-icon="mdi-magnify"
+              outlined
+              rounded
+            ></v-autocomplete>
+          </v-col>
           <v-col cols="12" sm="12" md="4" lg="3" v-if="select == null">
             <v-select
               v-model="filter"
@@ -59,26 +80,15 @@
               persistent-hint
             ></v-select>
           </v-col>
-          <v-col cols="12" sm="12" md="4" lg="3" v-if="select !== null">
-            <v-autocomplete
-              v-model="select"
-              :loading="loading"
-              :items="items"
-              :search-input.sync="search"
-              cache-items
-              flat
-              clearable
-              label="Select Recipe"
-              return-object
-            ></v-autocomplete>
-          </v-col>
         </v-row>
 
-        <v-row 
-          v-if="!filteredRecipes"
+        <div
+        v-if="!filteredRecipes"
+        >
+          <v-row
           justify="center"
           :style="$vuetify.breakpoint.width < 875 && $vuetify.breakpoint.width > 460 ? 'display:none;' : ''"
-        >
+          >
           <v-col
             v-for="(recipe, index) in recipes"
             :key="index"           
@@ -111,7 +121,6 @@
             </v-card>
           </v-col>
         </v-row>
-
         <v-card 
           @click="goToRecipePage(recipe.id)" 
           v-for="recipe in recipes" 
@@ -161,11 +170,16 @@
 
           </v-row>
         </v-card>
-
-        <v-row dense v-if="filteredRecipes">
+        </div>
+        
+        <div
+          dense v-if="filteredRecipes"
+        >
+          <v-row>
           <v-col
             v-for="(recipe, index) in filteredRecipes"
             :key="index"
+            :style="$vuetify.breakpoint.width < 875 && $vuetify.breakpoint.width > 460 ? 'display:none;' : ''"       
           >
             <v-card 
               width="400px" 
@@ -195,6 +209,57 @@
             </v-card>
           </v-col>
         </v-row>
+        <v-card 
+          @click="goToRecipePage(recipe.id)" 
+          v-for="recipe in filteredRecipes" 
+          :key="recipe.id"
+          :style="$vuetify.breakpoint.width > 875 || $vuetify.breakpoint.width < 460 ? 'display:none;' : ''"
+        >
+          <v-row dense justify="start" class="pa-5"  >
+
+            <v-col cols="auto">
+              <v-card max-width="200px" min-width='200px' flat>
+                <v-img
+                  :src="recipe.photo"
+                  class="black--text align-start"
+                  height="200px"
+                  width="200px"
+                >
+                </v-img>
+              </v-card>
+            </v-col>
+
+            <v-col align-self="start">
+              <v-card height="200px" class="black--text align-start" flat>
+                <div 
+                  align="left"
+                  v-text="recipe.type"
+                  class="text-subtitle-2 grey--text pt-2 pl-3 text-uppercase"
+                >
+                </div>
+                <div 
+                  align="left"
+                  v-text="recipe.title"
+                  class="text-h5 text--black pt-2 pl-3"
+                />
+                <div 
+                  align="left"
+                  v-text="recipe.description"
+                  class="text-subtitle-2 grey--text pt-2 pl-3 pb-5"
+                  :style="$vuetify.breakpoint.width < 650 ? 'display:none;' : ''"
+                />           
+                <div
+                  align="left"
+                  v-text="convertDate(recipe.updatedAt)"
+                  class="text-subtitle-2 primary--text pt-2 pl-3 text-uppercase"                
+                />
+              </v-card>
+            </v-col>
+
+          </v-row>
+        </v-card>
+        </div>
+        
 
       </v-container>
     </v-content>

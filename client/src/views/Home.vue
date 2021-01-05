@@ -358,8 +358,8 @@ export default {
         }, 500)
       },
     convertDate(date) {
-      var date = new Date(date);
-      return date.toLocaleDateString()
+      var convertedDate = new Date(date);
+      return convertedDate.toLocaleDateString()
     }
   },
   created() {

@@ -277,7 +277,7 @@ export default {
       formData.append('image', this.file);
       axios.post('https://api.imgur.com/3/image', formData, {
         headers: {
-          'Authorization': this.imgurSecret,
+          'Authorization': "Client-ID "+this.imgurSecret,
           'Content-Type': 'multipart/form-data'
           },
         })

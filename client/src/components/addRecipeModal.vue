@@ -159,7 +159,7 @@
               color="white"
               class="primary mt-10 mb-5" 
               @click="addImage()"
-              :disabled="!valid"
+
               :loading='loading'
             >
             Add Recipe

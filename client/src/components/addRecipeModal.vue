@@ -8,6 +8,15 @@
           <h2 class="font-weight-light mb-6 ml-5">Add New Recipe <v-btn icon class="float-right mr-4" @click="closeDialog()"><v-icon medium>mdi-close</v-icon></v-btn></h2>
         </v-card>
         <v-card-text>
+        <v-btn text @click="addFromWebsitefunction()" class="primary">Add From Website</v-btn>
+        <v-text-field
+          v-if="addFromWebsite"
+          label="Input Recipe URL"
+          messages="We only accept recipes from these sites: Allrecipes, Simplerecipes, Sallysbakingaddition, Gimmesomeoven, and Feelgoodfoodie"
+          v-model="websiteUrl"
+          @click:append-outer="websiteScrape(websiteUrl)"
+          append-outer-icon='mdi-arrow-right'
+        />
           <v-form 
             ref="form"
             v-model="valid"
@@ -80,7 +89,7 @@
             <span class="ma-0 overline">* Double click to edit ingredient</span><br>
             <span class="ma-0 overline">* Click and drag to change order</span><br>
             <p v-if="ingredientError" class="red--text" style="display:inline-block">{{ingredientError}}</p>
-            <span v-for="(ingredient, index) in ingredients" :key="index">
+            <span v-for="(ingredient, index) in ingredients" :key="'A'+index">
               <ul>
                 <li 
                   style="display: inline-block;"
@@ -95,7 +104,7 @@
                   {{ingredient}}
                 </li>
                 <span style="display:inline-block">
-                  <v-btn text icon @click="deleteIngredient(ingredient)">
+                  <v-btn text icon @click="deleteIngredient(index)">
                     <v-icon small>mdi-close-circle</v-icon>
                   </v-btn>
                 </span>
@@ -115,7 +124,7 @@
             <span class="ma-0 overline">* Double click to edit step</span><br>
             <span class="ma-0 overline">* Click and drag to change order</span><br>
             <p v-if="stepError" class="red--text" style="display:inline-block">{{stepError}}</p>
-            <span v-for="(step, index) in steps" :key="step">
+            <span v-for="(step, index) in steps" :key="index">
               <ol>
                 <li 
                   style="display: inline-block;"
@@ -125,11 +134,12 @@
                   @dragend="dragEndSteps" 
                   @drop="dragFinishSteps(index, $event)"
                   @dblclick="editStep(index)"
+                  :class="{ 'red_text': step.length >= 250 }"
                 >
                 {{index+1}}. {{step}}
               </li>
                 <span style="display:inline-block">
-                  <v-btn text icon @click="deleteStep(step)">
+                  <v-btn text icon @click="deleteStep(index)">
                     <v-icon small>mdi-close-circle</v-icon>
                   </v-btn>
                 </span>
@@ -164,9 +174,9 @@
 import axios from 'axios'
 import ImgurService from '../services/ImgurService'
 import RecipeService from '../services/RecipesService'
+import ScrapeService from '../services/ScrapeService'
 import { serverBus } from '../main'
 import { homePageRefresh } from '../main'
-
 
 export default {
   
@@ -216,7 +226,9 @@ export default {
       ],
       serving: ["1","2","3","4","5","6","7","8","9","10"],
       snackbarText: '',
-      dragging: -1
+      dragging: -1,
+      addFromWebsite: false,
+      websiteUrl: ''
     }
   },
   methods: {
@@ -244,8 +256,9 @@ export default {
         this.currentIngredient = ''
       }
     },
-    deleteIngredient(ingredient) {
-      this.ingredients = this.ingredients.filter(item => item !== ingredient)
+    deleteIngredient(indexValue) {
+      // this.ingredients = this.ingredients.filter(item => item !== ingredient)
+      this.ingredients.splice(indexValue, 1);
       this.ingredientError = ''
     },
     addStep(step) {
@@ -259,8 +272,9 @@ export default {
         this.currentStep = ''
       }
     },
-    deleteStep(step) {
-      this.steps = this.steps.filter(item => item !== step)
+    deleteStep(indexValue) {
+      // this.steps = this.steps.filter(item => item !== step)
+      this.steps.splice(indexValue, 1);
       this.stepError = ''
     },
     async getImgurSecret() {
@@ -367,6 +381,30 @@ export default {
     },
     closeDialog() {
       this.dialog = false
+    },
+    addFromWebsitefunction() {
+      if (this.addFromWebsite === false) {
+        this.addFromWebsite = true
+      } else {
+        this.addFromWebsite = false
+      }
+    },
+    async websiteScrape(url) {
+      try {
+        await ScrapeService.scrapeSite({ 
+          url: url,
+        }).then(resp => { 
+          this.title = resp.data.success.recipeName
+          this.cookTime = resp.data.success.cookTime
+          this.prepTime = resp.data.success.prepTime
+          this.content = resp.data.success.description
+          this.ingredients = resp.data.success.ingredients
+          this.steps = resp.data.success.instructions
+          this.valid = true
+        })
+      } catch (err) {
+        console.log(err)
+      }
     }
   },
   mounted() {
@@ -379,4 +417,11 @@ export default {
 .v-card__text, .v-card__title {
   word-break: normal;
 }
+
+.red_text {
+  color: red;
+  background-color: white;
+  border-color: white;
+}
+
 </style>

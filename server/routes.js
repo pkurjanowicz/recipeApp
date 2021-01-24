@@ -4,6 +4,7 @@ const ProfileController = require('./controllers/ProfileController')
 const RecipesController = require('./controllers/RecipesController')
 const CommentController = require('./controllers/CommentController')
 const addAdditionalPhotoController = require('./controllers/AdditionalPhotoController')
+const ScraperController = require('./controllers/ScraperController')
 const auth = require('./controllers/auth')
 
 
@@ -35,4 +36,5 @@ module.exports = (app) => {
   app.get('/getLoggedInEmail', RecipesController.getLoggedInEmail)
   app.get('/findUserInfo', ProfileController.findUserInfo)
   app.post('/unlikeRecipe', RecipesController.unlikeRecipe)
+  app.post('/scrapeUrl', ScraperController.scrapeSite)
 }
